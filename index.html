@@ -678,11 +678,11 @@ function launchConfetti(){const wrap=document.getElementById('confetti');const c
 
 // ── MODE ÉLÈVE ──
 function goStudent(){state.mode='student';showScreen('screen-student');document.getElementById('s-join').style.display='flex';document.getElementById('s-waiting').style.display='none';document.getElementById('s-answering').style.display='none';document.getElementById('s-result').style.display='none';}
-function joinSession(){
+async function joinSession(){
   const code=document.getElementById('s-code-input').value.trim().toUpperCase();
   const name=document.getElementById('s-name-input').value.trim();
   if(!code||!name){alert('Entre le code et ton prénom !');return;}
-  await _pullDB(code);const db=readDB();if(!db||db.code!==code){alert('Code invalide — vérifie avec ton professeur');return;}
+  _pullDB(code).then(()=>{}).catch(()=>{});await new Promise(r=>setTimeout(r,400));const db=readDB();if(!db||db.code!==code){alert('Code invalide — vérifie avec ton professeur');return;}
   state.studentCode=code;
   const colorIdx=db.players.length;state.studentName=name;state.studentColor=getColor(colorIdx);state.studentScore=0;
   db.players.push({name,color:state.studentColor,score:0,correct:0});writeDB(db);
@@ -690,7 +690,7 @@ function joinSession(){
   document.getElementById('s-waiting-name').textContent=name;
   document.getElementById('s-join').style.display='none';document.getElementById('s-waiting').style.display='flex';
   setInterval(async()=>{
-    if(state.studentCode)await _pullDB(state.studentCode);
+    if(state.studentCode){try{await _pullDB(state.studentCode);}catch(e){}}
     const db2=readDB();if(!db2)return;
     document.getElementById('s-waiting-players').textContent=`${db2.players.length} élève${db2.players.length>1?'s':''} connecté${db2.players.length>1?'s':''}`;
     if(db2.status==='question'&&db2.question&&db2.question.index!==state.currentQ){state.currentQ=db2.question.index;state.studentAnswered=false;state.studentSelected=null;showStudentQ(db2.question);}
