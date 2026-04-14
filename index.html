@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BanqueQuiz B2M — Conseiller Junior 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rouge: #E4003A;
+  --rouge-dark: #B8002E;
+  --rouge-light: rgba(228,0,58,0.12);
+  --marine: #1B2A6B;
+  --marine-dark: #111C4A;
+  --marine-light: rgba(27,42,107,0.12);
+  --blanc: #FFFFFF;
+  --gris: #F4F5F8;
+  --gris-bord: #E2E4EC;
+  --texte: #1B2A6B;
+  --muted: #6B7489;
+  --vert: #00A86B;
+  --vert-light: rgba(0,168,107,0.12);
+  --radius: 14px;
+  --radius-lg: 20px;
+  --shadow: 0 4px 20px rgba(27,42,107,0.10);
+  --shadow-sm: 0 2px 8px rgba(27,42,107,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Open Sans',sans-serif;background:var(--gris);color:var(--texte);min-height:100vh;}
+h1,h2,h3,.logo{font-family:'Montserrat',sans-serif;}
+
+/* ══ BARRE DE NAV ══ */
+.topbar{background:var(--marine);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.2rem;color:var(--blanc);letter-spacing:-0.5px;}
+.topbar .brand span{color:var(--rouge);}
+.btn-back-top{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:0.4rem 0.9rem;color:var(--blanc);font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;transition:all 0.2s;}
+.btn-back-top:hover{background:rgba(255,255,255,0.22);}
+
+/* ══ ACCUEIL ══ */
+#screen-home{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;background:var(--blanc);}
+.home-top{background:var(--marine);width:100%;padding:4rem 2rem 3rem;margin:-2rem -2rem 0;text-align:center;}
+.home-logo{font-family:'Montserrat',sans-serif;font-size:clamp(2.8rem,7vw,5rem);font-weight:900;color:var(--blanc);letter-spacing:-2px;line-height:1;}
+.home-logo span{color:var(--rouge);}
+.home-sub{color:rgba(255,255,255,0.7);font-size:0.95rem;margin-top:0.6rem;font-weight:600;}
+.home-badge{display:inline-block;background:var(--rouge);color:var(--blanc);font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.75rem;padding:0.3rem 0.9rem;border-radius:20px;margin-top:1rem;letter-spacing:1px;text-transform:uppercase;}
+.home-cards{display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center;margin-top:3rem;width:100%;max-width:600px;}
+.home-card{background:var(--blanc);border:2px solid var(--gris-bord);border-radius:var(--radius-lg);padding:2rem 2rem 1.8rem;cursor:pointer;transition:all 0.2s;flex:1;min-width:220px;text-align:left;box-shadow:var(--shadow-sm);}
+.home-card:hover{border-color:var(--rouge);transform:translateY(-4px);box-shadow:var(--shadow);}
+.home-card.primary{border-color:var(--marine);}
+.home-card .card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem;}
+.home-card.primary .card-icon{background:var(--marine-light);}
+.home-card.secondary .card-icon{background:var(--rouge-light);}
+.home-card h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:0.4rem;color:var(--marine);}
+.home-card p{font-size:0.82rem;color:var(--muted);line-height:1.5;}
+.home-tip{margin-top:2rem;font-size:0.78rem;color:var(--muted);max-width:400px;}
+
+/* ══ LOBBY PROF ══ */
+#screen-lobby{display:none;min-height:100vh;background:var(--gris);}
+.lobby-hero{background:var(--marine);padding:2rem;text-align:center;}
+.lobby-hero h1{font-family:'Montserrat',sans-serif;font-size:1.6rem;font-weight:800;color:var(--blanc);}
+.lobby-hero p{color:rgba(255,255,255,0.65);font-size:0.85rem;margin-top:0.4rem;}
+.lobby-body{padding:1.5rem;max-width:720px;margin:0 auto;}
+.code-card{background:var(--blanc);border-radius:var(--radius-lg);padding:2rem;text-align:center;box-shadow:var(--shadow);border-top:4px solid var(--rouge);margin-bottom:1.5rem;}
+.code-label{font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:0.5rem;}
+.code-val{font-family:'Montserrat',sans-serif;font-size:3.5rem;font-weight:900;color:var(--rouge);letter-spacing:10px;}
+.code-hint{font-size:0.8rem;color:var(--muted);margin-top:0.4rem;}
+.section-card{background:var(--blanc);border-radius:var(--radius);padding:1.25rem;box-shadow:var(--shadow-sm);margin-bottom:1.2rem;}
+.section-title{font-family:'Montserrat',sans-serif;font-size:0.8rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:1rem;}
+.theme-grid{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.theme-tag{background:var(--gris);border:1.5px solid var(--gris-bord);border-radius:20px;padding:0.35rem 0.9rem;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.15s;color:var(--muted);}
+.theme-tag.active{background:var(--marine-light);border-color:var(--marine);color:var(--marine);}
+.players-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.6rem;}
+.player-chip{background:var(--gris);border-radius:10px;padding:0.6rem 0.8rem;display:flex;align-items:center;gap:0.5rem;animation:popIn 0.3s ease;}
+@keyframes popIn{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.player-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.78rem;flex-shrink:0;}
+.player-chip .player-name{font-size:0.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.player-count{font-size:0.85rem;color:var(--muted);margin-bottom:1rem;}
+.player-count strong{color:var(--marine);font-weight:700;}
+.btn-start{width:100%;background:var(--rouge);color:var(--blanc);font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:800;border:none;border-radius:12px;padding:1rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;}
+.btn-start:hover{background:var(--rouge-dark);}
+.btn-start:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* ══ QUESTION PROF ══ */
+#screen-question{display:none;min-height:100vh;background:var(--gris);}
+.q-topbar{background:var(--marine);padding:0.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.q-left{display:flex;align-items:center;gap:1rem;}
+.q-num-badge{background:var(--rouge);color:var(--blanc);font-family:'Montserrat',sans-serif;font-weight:900;font-size:0.95rem;padding:0.3rem 0.8rem;border-radius:8px;}
+.q-progress-wrap{display:flex;flex-direction:column;gap:4px;}
+.q-total{font-size:0.7rem;color:rgba(255,255,255,0.5);font-weight:600;}
+.progress-bar{width:160px;height:5px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--rouge);transition:width 0.5s;}
+.q-theme-pill{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.85);border-radius:20px;padding:0.25rem 0.8rem;font-size:0.72rem;font-weight:700;}
+.q-right{display:flex;align-items:center;gap:1rem;}
+.avg-box{font-size:0.75rem;color:rgba(255,255,255,0.6);text-align:right;}
+.avg-box strong{color:var(--blanc);font-size:0.95rem;}
+.timer-ring{position:relative;width:56px;height:56px;flex-shrink:0;}
+.timer-ring svg{transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:rgba(255,255,255,0.15);stroke-width:5;}
+.ring-fill{fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:150;transition:stroke-dashoffset 1s linear,stroke 0.3s;}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:1.2rem;font-weight:900;color:var(--blanc);}
+.q-body{padding:1.5rem;max-width:860px;margin:0 auto;}
+.q-type-pill{display:inline-block;background:var(--marine-light);color:var(--marine);border-radius:6px;padding:0.2rem 0.7rem;font-size:0.72rem;font-weight:700;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:1px;}
+.q-text{font-family:'Montserrat',sans-serif;font-size:clamp(1.2rem,2.5vw,1.9rem);font-weight:800;line-height:1.35;margin-bottom:2rem;color:var(--marine);}
+.answers-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+@media(max-width:560px){.answers-grid{grid-template-columns:1fr;}}
+.answer-card{background:var(--blanc);border:2px solid var(--gris-bord);border-radius:var(--radius);padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem;transition:all 0.2s;box-shadow:var(--shadow-sm);}
+.answer-card .letter{width:34px;height:34px;border-radius:8px;background:var(--gris);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:0.9rem;flex-shrink:0;color:var(--marine);}
+.answer-card .answer-text{font-size:0.92rem;font-weight:600;line-height:1.3;color:var(--texte);}
+.answer-card.correct{background:var(--vert-light);border-color:var(--vert);}
+.answer-card.correct .letter{background:var(--vert);color:var(--blanc);}
+.answer-card.wrong{opacity:0.5;border-color:var(--gris-bord);}
+.q-vf{display:flex;gap:1rem;justify-content:center;}
+.vf-btn{background:var(--blanc);border:2px solid var(--gris-bord);border-radius:16px;padding:1.2rem 2.5rem;font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:900;min-width:160px;text-align:center;box-shadow:var(--shadow-sm);}
+.vf-btn.correct{background:var(--vert-light);border-color:var(--vert);color:var(--vert);}
+.vf-btn.wrong{opacity:0.4;}
+.expl-box{background:linear-gradient(135deg,rgba(27,42,107,0.05),rgba(228,0,58,0.04));border:1.5px solid var(--marine-light);border-left:4px solid var(--marine);border-radius:var(--radius);padding:1.25rem;margin-top:1.5rem;display:none;}
+.expl-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem;}
+.expl-icon{font-size:1.2rem;}
+.expl-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.9rem;color:var(--marine);}
+.expl-text{font-size:0.88rem;line-height:1.65;color:var(--texte);}
+.expl-anecdote{margin-top:0.6rem;font-size:0.82rem;color:var(--muted);font-style:italic;border-left:2px solid var(--rouge);padding-left:0.6rem;}
+.live-bar{background:var(--blanc);border-top:1.5px solid var(--gris-bord);padding:0.75rem 1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.live-count{font-size:0.82rem;color:var(--muted);white-space:nowrap;}
+.live-count strong{color:var(--vert);font-weight:700;}
+.answer-bars{display:flex;gap:0.6rem;flex:1;}
+.ans-bar-wrap{display:flex;flex-direction:column;gap:3px;flex:1;}
+.ans-bar-label{font-size:0.7rem;color:var(--muted);display:flex;justify-content:space-between;font-weight:600;}
+.ans-bar-track{height:7px;background:var(--gris);border-radius:4px;overflow:hidden;}
+.ans-bar-fill{height:100%;border-radius:4px;transition:width 0.5s;}
+.ans-bar-fill.a{background:#6366f1;}
+.ans-bar-fill.b{background:var(--rouge);}
+.ans-bar-fill.c{background:var(--vert);}
+.ans-bar-fill.d{background:#f59e0b;}
+.ans-bar-fill.v{background:var(--vert);}
+.ans-bar-fill.f{background:var(--rouge);}
+.q-controls{display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.5rem;background:var(--blanc);border-top:1.5px solid var(--gris-bord);}
+.btn{border:none;border-radius:10px;padding:0.65rem 1.4rem;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s;}
+.btn-reveal{background:var(--marine-light);color:var(--marine);border:1.5px solid rgba(27,42,107,0.2);}
+.btn-reveal:hover{background:rgba(27,42,107,0.2);}
+.btn-next{background:var(--marine);color:var(--blanc);}
+.btn-next:hover{background:var(--marine-dark);}
+.btn-end{background:rgba(228,0,58,0.1);color:var(--rouge);border:1.5px solid rgba(228,0,58,0.2);}
+.btn-lobby{background:var(--gris);color:var(--muted);margin-right:auto;}
+
+/* ══ PODIUM ══ */
+#screen-podium{display:none;min-height:100vh;background:var(--gris);}
+.podium-hero{background:var(--marine);padding:2.5rem 2rem;text-align:center;}
+.podium-hero h1{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:900;color:var(--blanc);}
+.podium-hero p{color:rgba(255,255,255,0.6);font-size:0.85rem;margin-top:0.4rem;}
+.podium-body{padding:1.5rem;max-width:600px;margin:0 auto;}
+.podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:1rem;margin-bottom:2rem;}
+.podium-player{display:flex;flex-direction:column;align-items:center;gap:0.4rem;}
+.podium-avatar{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;}
+.podium-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.85rem;color:var(--marine);}
+.podium-score{font-size:0.78rem;color:var(--muted);}
+.podium-block{border-radius:10px 10px 0 0;width:100px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:1.8rem;}
+.rank-1 .podium-block{height:140px;background:linear-gradient(to top,#92400e,#f59e0b);}
+.rank-2 .podium-block{height:105px;background:linear-gradient(to top,#374151,#9ca3af);}
+.rank-3 .podium-block{height:80px;background:linear-gradient(to top,#78350f,#d97706);}
+.rank-1 .podium-avatar{border:3px solid #f59e0b;}
+.full-lb{background:var(--blanc);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);}
+.lb-row{display:flex;align-items:center;gap:0.9rem;padding:0.8rem 1rem;border-bottom:1px solid var(--gris-bord);}
+.lb-row:last-child{border-bottom:none;}
+.lb-rank{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;width:26px;color:var(--muted);text-align:center;}
+.lb-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;}
+.lb-name{flex:1;font-weight:600;font-size:0.9rem;}
+.lb-score{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--rouge);font-size:0.95rem;}
+.lb-correct{font-size:0.72rem;color:var(--muted);}
+.podium-btn{display:block;margin:1.5rem auto 0;background:var(--rouge);color:var(--blanc);font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.95rem;border:none;border-radius:12px;padding:0.9rem 2rem;cursor:pointer;}
+
+/* ══ MODE ÉLÈVE — MOBILE FIRST ══ */
+#screen-student{display:none;min-height:100vh;background:var(--blanc);}
+
+/* Écran de connexion élève */
+.s-join{display:flex;flex-direction:column;min-height:100vh;}
+.s-join-hero{background:var(--marine);padding:3rem 1.5rem 2.5rem;text-align:center;}
+.s-join-hero .logo{font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:900;color:var(--blanc);}
+.s-join-hero .logo span{color:var(--rouge);}
+.s-join-hero p{color:rgba(255,255,255,0.6);font-size:0.85rem;margin-top:0.4rem;}
+.s-join-body{flex:1;padding:2rem 1.5rem;display:flex;flex-direction:column;gap:1rem;max-width:400px;margin:0 auto;width:100%;}
+.s-join-body label{font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem;display:block;}
+.s-input{width:100%;background:var(--gris);border:2px solid var(--gris-bord);border-radius:12px;padding:1rem 1.2rem;color:var(--texte);font-size:1rem;font-family:'Open Sans',sans-serif;transition:border 0.2s;}
+.s-input:focus{outline:none;border-color:var(--marine);}
+.s-input.code{font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:900;text-align:center;letter-spacing:6px;text-transform:uppercase;}
+.btn-join{width:100%;background:var(--rouge);color:var(--blanc);font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;border:none;border-radius:12px;padding:1.1rem;cursor:pointer;transition:all 0.2s;margin-top:0.5rem;}
+.btn-join:hover{background:var(--rouge-dark);}
+.s-back{background:none;border:none;color:var(--muted);font-size:0.82rem;font-weight:600;cursor:pointer;padding:0.5rem;text-align:center;font-family:'Open Sans',sans-serif;}
+
+/* Salle d'attente */
+.s-waiting{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;gap:1.5rem;}
+.s-waiting-avatar{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.8rem;margin:0 auto;}
+.s-waiting-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.4rem;color:var(--marine);}
+.waiting-pulse{color:var(--muted);font-size:0.85rem;font-weight:600;}
+.waiting-pulse::after{content:'...';animation:dots 1.5s infinite;}
+@keyframes dots{0%{content:'.';}33%{content:'..';}66%{content:'...';}100%{content:'';}}
+.waiting-count{background:var(--gris);border-radius:20px;padding:0.4rem 1rem;font-size:0.78rem;color:var(--muted);font-weight:600;}
+
+/* Écran de question élève */
+.s-answering{display:none;flex-direction:column;min-height:100vh;}
+.s-q-topbar{background:var(--marine);padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;}
+.s-q-num{font-family:'Montserrat',sans-serif;font-weight:700;color:rgba(255,255,255,0.6);font-size:0.82rem;}
+.s-timer{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:var(--blanc);min-width:44px;text-align:center;transition:color 0.3s;}
+.s-q-body{flex:1;padding:1.25rem 1.25rem 1rem;display:flex;flex-direction:column;}
+.s-q-theme{display:inline-block;background:var(--marine-light);color:var(--marine);border-radius:20px;padding:0.25rem 0.8rem;font-size:0.72rem;font-weight:700;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.8px;}
+.s-q-text{font-family:'Montserrat',sans-serif;font-size:clamp(1rem,4vw,1.3rem);font-weight:800;line-height:1.45;color:var(--marine);flex:1;margin-bottom:1.5rem;}
+.s-answers-qcm{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;}
+.s-ans-btn{background:var(--blanc);border:2px solid var(--gris-bord);border-radius:14px;padding:1rem 0.8rem;font-family:'Open Sans',sans-serif;font-size:0.88rem;font-weight:600;color:var(--texte);cursor:pointer;transition:all 0.15s;text-align:left;display:flex;align-items:flex-start;gap:0.6rem;box-shadow:var(--shadow-sm);}
+.s-ans-btn:active{transform:scale(0.96);}
+.s-ans-btn .s-letter{font-family:'Montserrat',sans-serif;font-weight:900;font-size:0.85rem;color:var(--marine);flex-shrink:0;width:22px;}
+.s-ans-btn.selected{border-color:var(--marine);background:var(--marine-light);}
+.s-ans-btn.correct{border-color:var(--vert);background:var(--vert-light);}
+.s-ans-btn.wrong{border-color:var(--gris-bord);opacity:0.45;}
+.s-vf{display:flex;gap:0.75rem;}
+.s-vf-btn{flex:1;background:var(--blanc);border:2px solid var(--gris-bord);border-radius:16px;padding:1.5rem 1rem;font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:900;color:var(--texte);cursor:pointer;transition:all 0.15s;text-align:center;box-shadow:var(--shadow-sm);}
+.s-vf-btn:active{transform:scale(0.96);}
+.s-vf-btn.selected{border-color:var(--marine);background:var(--marine-light);}
+.s-vf-btn.correct{border-color:var(--vert);background:var(--vert-light);}
+.s-vf-btn.wrong{opacity:0.35;}
+
+/* Résultat après réponse */
+.s-result{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;gap:1.2rem;}
+.s-result-icon{font-size:4rem;}
+.s-result-label{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:900;color:var(--marine);}
+.s-result-pts{font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:900;}
+.s-result-total{font-size:0.85rem;color:var(--muted);font-weight:600;}
+.s-result-wait{font-size:0.8rem;color:var(--muted);background:var(--gris);border-radius:20px;padding:0.4rem 1rem;}
+
+/* ══ CONFETTIS ══ */
+.confetti-wrap{position:fixed;top:0;left:0;right:0;pointer-events:none;z-index:999;}
+.confetto{position:absolute;width:8px;height:8px;opacity:0;animation:fall linear forwards;border-radius:2px;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--gris-bord);border-radius:3px;}
+</style>
+</head>
+<body>
+<div class="confetti-wrap" id="confetti"></div>
+
+<!-- ══ ACCUEIL ══ -->
+<div id="screen-home">
+  <div class="home-top" style="width:calc(100% + 4rem);margin-left:-2rem;margin-right:-2rem;margin-top:-2rem;">
+    <div class="home-logo">Banque<span>Quiz</span></div>
+    <div class="home-sub">B2M Montauban — Conseiller Junior 2026</div>
+    <div class="home-badge">120 questions · Produits &amp; Réglementations</div>
+  </div>
+  <div class="home-cards">
+    <div class="home-card primary" onclick="goLobby()">
+      <div class="card-icon">🎓</div>
+      <h3>Mode Professeur</h3>
+      <p>Lancez la session, affichez sur le rétroprojecteur et gérez le jeu.</p>
+    </div>
+    <div class="home-card secondary" onclick="goStudent()">
+      <div class="card-icon">📱</div>
+      <h3>Mode Élève</h3>
+      <p>Rejoignez depuis votre téléphone et répondez aux questions.</p>
+    </div>
+  </div>
+  <p class="home-tip">💡 Demo : ouvrir "Mode Élève" dans un autre onglet du même navigateur</p>
+</div>
+
+<!-- ══ LOBBY PROF ══ -->
+<div id="screen-lobby">
+  <div class="topbar">
+    <div class="brand">Banque<span>Quiz</span></div>
+    <button class="btn-back-top" onclick="goHome()">← Accueil</button>
+  </div>
+  <div class="lobby-hero">
+    <h1>🎓 Session Professeur</h1>
+    <p>Partagez le code, choisissez vos thèmes, puis lancez</p>
+  </div>
+  <div class="lobby-body">
+    <div class="code-card">
+      <div class="code-label">Code de session</div>
+      <div class="code-val" id="session-code">—</div>
+      <div class="code-hint">Ouvrir cette page → Mode Élève → entrer le code</div>
+    </div>
+    <div class="section-card">
+      <div class="section-title">Thèmes actifs</div>
+      <div class="theme-grid" id="theme-grid"></div>
+    </div>
+    <div class="section-card">
+      <div class="section-title">Élèves connectés (<span id="pc-num">0</span>)</div>
+      <div class="player-count" id="player-count"></div>
+      <div class="players-grid" id="players-grid"></div>
+    </div>
+    <button class="btn-start" id="btn-start" onclick="startGame()" disabled>▶ Lancer la partie</button>
+  </div>
+</div>
+
+<!-- ══ QUESTION PROF ══ -->
+<div id="screen-question">
+  <div class="q-topbar">
+    <div class="q-left">
+      <div class="q-num-badge" id="q-num">Q1</div>
+      <div class="q-progress-wrap">
+        <div class="q-total" id="q-total">/ —</div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="q-theme-pill" id="q-theme-badge">—</div>
+    </div>
+    <div class="q-right">
+      <div class="avg-box">Score moy.<br><strong id="avg-score">—</strong></div>
+      <div class="timer-ring">
+        <svg viewBox="0 0 56 56" width="56" height="56">
+          <circle class="ring-bg" cx="28" cy="28" r="24"/>
+          <circle class="ring-fill" id="timer-ring" cx="28" cy="28" r="24" stroke-dashoffset="0" stroke="#E4003A"/>
+        </svg>
+        <div class="timer-num" id="timer-num">30</div>
+      </div>
+    </div>
+  </div>
+  <div class="q-body">
+    <div class="q-type-pill" id="q-type-badge">QCM</div>
+    <div class="q-text" id="q-text">Question…</div>
+    <div id="answers-container"></div>
+    <div class="expl-box" id="explanation-box">
+      <div class="expl-header"><div class="expl-icon">💡</div><div class="expl-title">Rappel du cours</div></div>
+      <div class="expl-text" id="expl-text"></div>
+      <div class="expl-anecdote" id="expl-anecdote" style="display:none"></div>
+    </div>
+  </div>
+  <div class="live-bar">
+    <div class="live-count">Réponses : <strong id="answered-count">0</strong> / <span id="total-players-q">0</span></div>
+    <div class="answer-bars" id="answer-bars"></div>
+  </div>
+  <div class="q-controls">
+    <button class="btn btn-lobby" onclick="backToLobby()">← Lobby</button>
+    <button class="btn btn-reveal" id="btn-reveal" onclick="revealAnswer()">👁 Révéler</button>
+    <button class="btn btn-next" id="btn-next" onclick="nextQuestion()" style="display:none">Suivant →</button>
+    <button class="btn btn-end" onclick="endGame()">⏹</button>
+  </div>
+</div>
+
+<!-- ══ PODIUM ══ -->
+<div id="screen-podium">
+  <div class="topbar">
+    <div class="brand">Banque<span>Quiz</span></div>
+    <button class="btn-back-top" onclick="goHome()">← Accueil</button>
+  </div>
+  <div class="podium-hero">
+    <h1>🏆 Résultats !</h1>
+    <p id="podium-subtitle">Félicitations à tous !</p>
+  </div>
+  <div class="podium-body">
+    <div class="podium-wrap" id="podium-wrap"></div>
+    <div class="full-lb" id="full-leaderboard"></div>
+    <button class="podium-btn" onclick="location.reload()">↺ Nouvelle partie</button>
+  </div>
+</div>
+
+<!-- ══ MODE ÉLÈVE ══ -->
+<div id="screen-student">
+  <!-- Connexion -->
+  <div class="s-join" id="s-join">
+    <div class="s-join-hero">
+      <div class="logo">Banque<span style="color:var(--rouge)">Quiz</span></div>
+      <p>Rejoindre la session de cours</p>
+    </div>
+    <div class="s-join-body">
+      <div>
+        <label>Code de session</label>
+        <input type="text" class="s-input code" id="s-code-input" placeholder="XXXXX" maxlength="6" oninput="this.value=this.value.toUpperCase()" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div>
+        <label>Ton prénom</label>
+        <input type="text" class="s-input" id="s-name-input" placeholder="Ex : Sophie" maxlength="20" autocomplete="given-name">
+      </div>
+      <button class="btn-join" onclick="joinSession()">Rejoindre 🚀</button>
+      <button class="s-back" onclick="goHome()">← Retour à l'accueil</button>
+    </div>
+  </div>
+
+  <!-- Attente -->
+  <div class="s-waiting" id="s-waiting">
+    <button class="s-back" onclick="backToStudentJoin()" style="position:absolute;top:1rem;left:1rem;">← Quitter</button>
+    <div class="s-waiting-avatar" id="s-waiting-avatar">?</div>
+    <div class="s-waiting-name" id="s-waiting-name"></div>
+    <div class="waiting-pulse">En attente du professeur</div>
+    <div class="waiting-count" id="s-waiting-players">0 élève connecté</div>
+  </div>
+
+  <!-- Question élève -->
+  <div class="s-answering" id="s-answering">
+    <div class="s-q-topbar">
+      <div class="s-q-num" id="s-q-num">Q1</div>
+      <div class="s-timer" id="s-timer">30</div>
+    </div>
+    <div class="s-q-body">
+      <div class="s-q-theme" id="s-q-theme">—</div>
+      <div class="s-q-text" id="s-q-text"></div>
+      <div id="s-answers"></div>
+    </div>
+  </div>
+
+  <!-- Résultat -->
+  <div class="s-result" id="s-result">
+    <div class="s-result-icon" id="s-result-icon">—</div>
+    <div class="s-result-label" id="s-result-label"></div>
+    <div class="s-result-pts" id="s-result-pts">+0 pts</div>
+    <div class="s-result-total" id="s-result-total">Total : 0 pts</div>
+    <div class="s-result-wait">Prochaine question bientôt…</div>
+  </div>
+</div>
+
+<script>
+const COLORS=['#E4003A','#1B2A6B','#00A86B','#f59e0b','#6366f1','#ec4899','#0ea5e9','#14b8a6','#f97316','#8b5cf6','#84cc16','#06b6d4'];
+const QUESTIONS=[
+  // ── LIVRETS RÉGLEMENTÉS ──
+  {theme:'Livrets réglementés',type:'qcm',q:"Quel est le taux du Livret A au 1er février 2025 ?",a:["1,7%","2,4%","3%","3,5%"],correct:1,expl:"Le taux du Livret A a été fixé à 2,4% au 1er février 2025, après avoir été de 3% pendant deux ans. Ce taux est révisé deux fois par an (février et août) par le gouverneur de la Banque de France selon une formule réglementaire liée à l'inflation.",anecdote:"Le taux du Livret A atteint au maximum 3% en 2023, son plus haut niveau depuis 2009. Plus de 55 millions de Français en détiennent un."},
+  {theme:'Livrets réglementés',type:'qcm',q:"Quel est le plafond de dépôt du Livret A pour un particulier en 2026 ?",a:["15 300 €","19 125 €","22 950 €","30 000 €"],correct:2,expl:"Le plafond du Livret A est fixé à 22 950 € pour les personnes physiques. Pour les associations, il est de 76 500 €. Les intérêts capitalisés peuvent dépasser ce plafond, mais les versements sont bloqués une fois ce seuil atteint.",anecdote:"Ce plafond a été rehaussé deux fois depuis 2012 (de 15 300 € à 22 950 €) pour encourager l'épargne des Français. Le Livret A finance à 65 % le logement social en France."},
+  {theme:'Livrets réglementés',type:'qcm',q:"Quel est le plafond du LDDS (Livret de Développement Durable et Solidaire) ?",a:["6 000 €","9 200 €","12 000 €","15 000 €"],correct:2,expl:"Le LDDS est plafonné à 12 000 €. Il est rémunéré au même taux que le Livret A (2,4% en 2025), totalement exonéré d'impôt sur le revenu et de prélèvements sociaux. Il finance les PME de l'économie sociale et solidaire et la transition énergétique.",anecdote:"Le LDDS s'appelait auparavant CODEVI (Compte pour le Développement Industriel), puis LDD, avant de prendre le nom de LDDS en 2012 pour marquer son orientation durable."},
+  {theme:'Livrets réglementés',type:'qcm',q:"Quel est le taux du LEP (Livret d'Épargne Populaire) en 2025 ?",a:["2,4%","3%","3,5%","4%"],correct:2,expl:"Le LEP est rémunéré à 3,5% depuis le 1er août 2024. Son taux est au moins égal au taux du Livret A majoré de 0,5 point. Réservé aux ménages modestes (conditions de revenus), c'est le meilleur livret réglementé disponible.",anecdote:"Seulement 60% des personnes éligibles au LEP en possèdent un. Un effort massif de promotion est mené depuis 2022, notamment via le partage automatique des données fiscales avec les banques."},
+  {theme:'Livrets réglementés',type:'qcm',q:"Quel est le plafond du LEP en 2026 ?",a:["7 700 €","10 000 €","12 000 €","15 000 €"],correct:1,expl:"Le plafond du LEP est fixé à 10 000 €. Pour en bénéficier, le revenu fiscal de référence ne doit pas dépasser un certain seuil (environ 21 393 € pour une part fiscale en 2024). Les intérêts sont exonérés d'impôt sur le revenu et de prélèvements sociaux.",anecdote:"Le LEP est le livret le plus avantageux pour les ménages modestes, mais il reste méconnu. Depuis 2023, les banques sont obligées d'informer les clients éligibles de son existence."},
+  {theme:'Livrets réglementés',type:'vf',q:"Les intérêts du Livret A sont exonérés d'impôt sur le revenu ET de prélèvements sociaux.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Les intérêts du Livret A, du LDDS et du LEP sont totalement exonérés d'impôt sur le revenu et de prélèvements sociaux (17,2%). C'est l'un des avantages majeurs de ces livrets réglementés par rapport aux comptes à terme ou livrets bancaires classiques.",anecdote:"En comparaison, les intérêts d'un livret bancaire classique (livret A+, super livret) sont soumis au PFU de 30% : 12,8% d'IR et 17,2% de prélèvements sociaux."},
+  {theme:'Livrets réglementés',type:'vf',q:"Le Livret Jeune est réservé aux personnes de 12 à 25 ans, avec un plafond de 1 600 €.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Le Livret Jeune est réservé aux résidents fiscaux français âgés de 12 à 25 ans. Son plafond est de 1 600 €. Son taux est au moins égal à celui du Livret A. Il est totalement exonéré de fiscalité. La clôture est automatique au 31 décembre de l'année des 25 ans.",anecdote:"Le Livret Jeune peut être ouvert dès 12 ans avec l'accord des parents. Il est souvent le premier produit bancaire des jeunes Français et un excellent outil de découverte de l'épargne."},
+  {theme:'Livrets réglementés',type:'qcm',q:"Le CEL (Compte Épargne Logement) ouvre droit à :",a:["Un crédit immo à taux zéro","Un prêt épargne logement à taux préférentiel","Une prime d'État systématique","Un abattement fiscal de 50%"],correct:1,expl:"Après une phase d'épargne minimum de 18 mois et un minimum de versements, le CEL ouvre droit à un prêt épargne logement à taux préférentiel. Le CEL ouvert avant 2018 peut bénéficier d'une prime d'État. Taux du CEL depuis 01/02/2025 : 1,75%.",anecdote:"Le CEL est souvent sous-utilisé car ses avantages sont modestes comparés au PEL. Il reste utile pour constituer une épargne de précaution tout en ouvrant un droit à prêt."},
+  // ── ÉPARGNE BANCAIRE PEL ──
+  {theme:'Épargne bancaire & PEL',type:'qcm',q:"Quel est le taux d'un PEL ouvert depuis le 1er janvier 2024 ?",a:["1,75%","2%","2,25%","3%"],correct:2,expl:"Le taux du PEL (Plan Épargne Logement) est fixé à 2,25% pour les plans ouverts depuis le 1er janvier 2024. Ce taux est garanti pendant toute la durée du plan. Depuis 2018, les intérêts des nouveaux PEL sont soumis au PFU de 30% dès la première année.",anecdote:"Les anciens PEL ouverts avant 2011 bénéficient de taux bien plus attractifs (jusqu'à 4,25%) et ne sont pas fiscalisés. Ils sont devenus de véritables trésors patrimoniaux pour leurs détenteurs."},
+  {theme:'Épargne bancaire & PEL',type:'qcm',q:"Quelle est la durée minimale d'un PEL pour ouvrir un droit à prêt ?",a:["2 ans","3 ans","4 ans","5 ans"],correct:2,expl:"La phase d'épargne minimale d'un PEL est de 4 ans. Au-delà, le titulaire peut bloquer son PEL et utiliser les droits acquis pour obtenir un prêt épargne logement à un taux fixé lors de l'ouverture (3,45% pour un PEL ouvert depuis 2024). La durée maximale est de 10 ans.",anecdote:"Le prêt PEL peut financer l'acquisition ou la rénovation d'une résidence principale. Son montant maximum est de 92 000 €. Après 15 ans, le PEL est transformé automatiquement en livret ordinaire."},
+  {theme:'Épargne bancaire & PEL',type:'qcm',q:"Quel est le plafond de versements d'un PEL ?",a:["30 000 €","45 000 €","61 200 €","100 000 €"],correct:2,expl:"Le plafond de versements sur un PEL est de 61 200 €. Le versement initial minimum est de 225 € et les versements annuels minimum sont de 540 €. Les intérêts peuvent continuer à se capitaliser au-delà de ce plafond sans limite.",anecdote:"Avec un versement initial de 225 € et des versements mensuels de 45 €, un PEL peut atteindre son plafond en environ 10 ans. Le PEL reste l'un des rares placements à capital garanti avec un taux fixe sur une longue durée."},
+  {theme:'Épargne bancaire & PEL',type:'vf',q:"Un PEL ouvert depuis 2018 est fiscalisé dès la première année sur les intérêts générés.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Depuis la loi de finances 2018, les intérêts des nouveaux PEL sont soumis au PFU (Flat Tax) de 30% dès la première année, contrairement aux PEL ouverts avant 2018 qui bénéficiaient d'une exonération pendant 12 ans. C'est un changement majeur qui a réduit l'attrait du PEL.",anecdote:"Avant 2018, les PEL bénéficiaient d'une exonération d'impôt sur le revenu pendant les 12 premières années. Ce régime privilégié a été supprimé pour les plans ouverts à partir du 1er janvier 2018."},
+  {theme:'Épargne bancaire & PEL',type:'qcm',q:"Qu'est-ce qu'un compte à terme (CAT) ?",a:["Un compte courant avec terme de préavis","Un dépôt bloqué à taux fixe sur une durée déterminée","Un livret avec taux variable","Un compte épargne sans plafond"],correct:1,expl:"Un compte à terme est un dépôt bancaire bloqué pour une durée définie (de quelques jours à plusieurs années) à un taux d'intérêt fixé à l'avance. Le capital et les intérêts sont garantis. En cas de retrait anticipé, une pénalité est généralement appliquée. Les intérêts sont soumis au PFU de 30%.",anecdote:"Les CAT ont connu un regain d'intérêt en 2023-2024 avec la remontée des taux. Certaines banques ont proposé des taux supérieurs à 4% sur des durées de 1 à 2 ans."},
+  {theme:'Épargne bancaire & PEL',type:'qcm',q:"Quel fichier la banque consulte-t-elle obligatoirement avant l'ouverture d'un compte ?",a:["Le FICOBA uniquement","Le FCC et le FICP","Le FGDR","Le TAEG"],correct:1,expl:"Avant l'ouverture d'un compte et l'attribution de moyens de paiement, la banque consulte le FCC (Fichier Central des Chèques) pour vérifier l'absence d'interdiction bancaire, et le FICP (Fichier des Incidents de remboursement des Crédits aux Particuliers) pour évaluer les risques.",anecdote:"Le FICOBA (Fichier national des Comptes Bancaires et Assimilés) n'est pas consulté à l'ouverture mais permet aux administrations (fisc, justice) de retrouver les comptes d'une personne. Il recense plus de 200 millions de comptes en France."},
+  // ── ASSURANCE VIE ──
+  {theme:'Assurance vie',type:'qcm',q:"Quel est l'abattement fiscal annuel sur les plus-values lors d'un rachat d'assurance vie après 8 ans de détention (personne seule) ?",a:["2 300 €","4 600 €","9 200 €","15 000 €"],correct:1,expl:"Après 8 ans de détention, l'abattement annuel sur les gains lors des rachats est de 4 600 € pour une personne seule et 9 200 € pour un couple marié ou pacsé. Au-delà, les gains sont taxés à 7,5% (+ 17,2% de PS) pour les primes versées avant 150 000 €, et 12,8% au-delà.",anecdote:"L'assurance vie représente le premier placement financier des Français avec plus de 1 900 milliards d'euros d'encours. Sa fiscalité avantageuse après 8 ans en fait un outil patrimonial incontournable."},
+  {theme:'Assurance vie',type:'vf',q:"En cas de décès, le capital versé aux bénéficiaires d'une assurance vie entre dans l'actif successoral et est soumis aux droits de succession.",a:["Vrai","Faux"],correct:1,expl:"FAUX. L'assurance vie bénéficie d'un régime hors succession (article L132-12 du Code des assurances). Les capitaux décès sont versés directement aux bénéficiaires désignés sans passer par la succession, ce qui permet d'optimiser la transmission du patrimoine en dehors des règles classiques d'héritage.",anecdote:"Cette particularité de l'assurance vie en fait l'outil de transmission le plus utilisé en France. Elle permet notamment de gratifier des personnes qui ne seraient pas héritières légales."},
+  {theme:'Assurance vie',type:'qcm',q:"Quel est l'abattement par bénéficiaire sur les capitaux décès d'une assurance vie, pour les primes versées avant 70 ans ?",a:["30 500 €","100 000 €","152 500 €","300 000 €"],correct:2,expl:"Chaque bénéficiaire désigné bénéficie d'un abattement de 152 500 € sur les capitaux issus des primes versées avant 70 ans. Au-delà, le prélèvement est de 20% jusqu'à 700 000 € et 31,25% au-delà. Cet abattement est propre à l'assurance vie et s'applique par bénéficiaire.",anecdote:"Un assuré avec 3 enfants peut transmettre jusqu'à 457 500 € (3 × 152 500 €) en totale franchise fiscale via l'assurance vie sur les primes versées avant 70 ans. Un outil de transmission très puissant."},
+  {theme:'Assurance vie',type:'qcm',q:"Qu'est-ce que l'effet cliquet dans un fonds euros d'assurance vie ?",a:["Le capital peut baisser si les marchés baissent","Les intérêts acquis chaque année sont définitivement garantis et ne peuvent pas être perdus","Le taux est révisé chaque trimestre","Le capital est disponible seulement après 8 ans"],correct:1,expl:"L'effet cliquet signifie que les intérêts générés par le fonds euros sont définitivement acquis chaque année : ils s'ajoutent au capital garanti et ne peuvent plus être reprécisés à la baisse, même si les marchés se dégradent. C'est une protection essentielle du capital investi.",anecdote:"L'effet cliquet est une caractéristique unique des fonds euros français, fruit d'une réglementation spécifique. Il n'existe pas dans la plupart des contrats d'assurance vie étrangers."},
+  {theme:'Assurance vie',type:'qcm',q:"Quelle est la différence fondamentale entre un fonds euros et des unités de compte (UC) en assurance vie ?",a:["Le fonds euros rapporte plus","Le fonds euros garantit le capital, les UC ne le garantissent pas","Les UC sont réservées aux professionnels","Le fonds euros est bloqué 10 ans"],correct:1,expl:"Le fonds euros garantit le capital investi (hors frais) grâce à l'effet cliquet. Les unités de compte (UC) sont des supports investis en actions, obligations, immobilier etc. : leur valeur fluctue selon les marchés et le capital n'est pas garanti. Les UC offrent un potentiel de rendement supérieur avec un risque de perte en capital.",anecdote:"En 2023, le rendement moyen des fonds euros était d'environ 2,5%, tandis que certaines UC actions avaient progressé de plus de 20%. Le choix entre fonds euros et UC dépend du profil de risque du client."},
+  {theme:'Assurance vie',type:'qcm',q:"Quel est le taux moyen servi par les fonds euros en 2024 ?",a:["1,2%","1,8%","2,5%","4%"],correct:2,expl:"Le taux moyen des fonds euros a été d'environ 2,5% en 2024, leur meilleur niveau depuis plus de 10 ans. Cette remontée est directement liée à la hausse des taux d'intérêt sur les obligations d'État (le sous-jacent principal des fonds euros).",anecdote:"En 2021, le taux moyen des fonds euros n'était que de 1,3%. La remontée rapide des taux directeurs de la BCE en 2022-2023 a mécaniquement revalorisé le rendement des fonds euros avec un décalage de 1 à 2 ans."},
+  {theme:'Assurance vie',type:'vf',q:"Il est possible de désigner plusieurs bénéficiaires dans un contrat d'assurance vie, avec des quotités différentes.",a:["Vrai","Faux"],correct:0,expl:"VRAI. La clause bénéficiaire peut désigner plusieurs bénéficiaires avec des parts différentes (ex : 50% au conjoint, 25% à chaque enfant). Elle peut aussi être hiérarchique (le bénéficiaire de rang 1 n'est payé qu'en cas de décès du bénéficiaire de rang 1, etc.).",anecdote:"La rédaction de la clause bénéficiaire est cruciale. Une clause trop vague ('mes héritiers') peut annuler les avantages fiscaux de l'assurance vie. Il est recommandé de la réviser régulièrement en cas de changement familial."},
+  {theme:'Assurance vie',type:'qcm',q:"Qu'est-ce que la clause bénéficiaire démembrée en assurance vie ?",a:["Un contrat sans bénéficiaire désigné","Une clause qui désigne un usufruitier (ex : conjoint) et un nu-propriétaire (ex : enfants)","Un contrat avec deux assureurs différents","Une clause annulée par le tribunal"],correct:1,expl:"La clause bénéficiaire démembrée désigne un usufruitier (souvent le conjoint) qui reçoit le capital en usufruit, et des nu-propriétaires (souvent les enfants) qui reçoivent une créance de restitution. Cette technique permet d'optimiser la transmission en limitant les droits de succession.",anecdote:"La clause démembrée est une technique patrimoniale avancée utilisée par les conseillers en gestion de patrimoine. Elle est recommandée dans les familles recomposées ou pour les patrimoines importants."},
+  // ── PER ──
+  {theme:'PER — Plan Épargne Retraite',type:'qcm',q:"Quelle loi a créé le Plan d'Épargne Retraite (PER) en unifiant les anciens produits retraite ?",a:["Loi Macron 2015","Loi PACTE 2019","Loi Lagarde 2010","Loi Fillon 2003"],correct:1,expl:"La loi PACTE du 22 mai 2019 a créé le PER individuel (PERin), le PER collectif (PERCOL) et le PER obligatoire (PERO), remplaçant les anciens PERP, Madelin, PERCO, article 83 et contrat Préfon. L'objectif était de simplifier et harmoniser l'épargne retraite.",anecdote:"La loi PACTE a également permis le transfert des anciens contrats vers un PER, facilitant la consolidation de l'épargne retraite dispersée sur différents supports."},
+  {theme:'PER — Plan Épargne Retraite',type:'qcm',q:"Quel est le plafond annuel de déduction fiscale des versements volontaires sur un PER en 2026 ?",a:["10% du PASS (soit environ 4 637 €)","10% des revenus N-1 dans la limite de 8 PASS (soit environ 37 094 €)","20% des revenus nets","Sans plafond"],correct:1,expl:"Les versements volontaires sur un PER sont déductibles de l'impôt sur le revenu dans la limite de 10% des revenus professionnels de l'année N-1, plafonnée à 8 fois le PASS (Plafond Annuel de la Sécurité Sociale). En 2026, ce plafond est d'environ 37 094 €. Le plancher est 10% du PASS (environ 4 637 €).",anecdote:"Pour un salarié avec 60 000 € de revenus imposables, la déduction maximum est de 6 000 €. Pour un TNS avec 200 000 € de revenus, la limite est le plafond de 8 PASS. Plus les revenus sont élevés, plus l'avantage fiscal est important."},
+  {theme:'PER — Plan Épargne Retraite',type:'qcm',q:"Combien de cas permettent un déblocage anticipé du PER avant la retraite ?",a:["3 cas","4 cas","6 cas","8 cas"],correct:2,expl:"Le PER prévoit 6 cas de déblocage anticipé : 1) Décès du conjoint ou partenaire de PACS, 2) Invalidité (2e ou 3e catégorie), 3) Surendettement, 4) Expiration des droits chômage, 5) Cessation d'activité non salariée suite à liquidation judiciaire, 6) Acquisition de la résidence principale.",anecdote:"L'acquisition de la résidence principale est le cas de déblocage anticipé le plus utilisé. Un jeune couple peut ainsi utiliser son PER pour financer l'apport de son premier achat immobilier, tout en ayant bénéficié de la déduction fiscale des versements."},
+  {theme:'PER — Plan Épargne Retraite',type:'vf',q:"À la retraite, le PER peut être débloqué uniquement sous forme de rente viagère.",a:["Vrai","Faux"],correct:1,expl:"FAUX. C'est précisément une innovation majeure du PER par rapport aux anciens PERP ! Le PER peut être débloqué à la retraite sous forme de capital (en une fois ou fractionné), de rente viagère, ou d'une combinaison des deux. Cette flexibilité est très appréciée des épargnants.",anecdote:"L'ancien PERP imposait une sortie en rente à 80% minimum, ce qui en freinait l'adoption. La possibilité de sortie en capital du PER a dynamisé sa collecte : plus de 100 milliards d'euros collectés depuis 2019."},
+  {theme:'PER — Plan Épargne Retraite',type:'vf',q:"Les versements sur un PER sont toujours déductibles du revenu imposable — l'épargnant n'a pas le choix.",a:["Vrai","Faux"],correct:1,expl:"FAUX. L'épargnant peut choisir de NE PAS déduire ses versements du revenu imposable. Cette option est avantageuse si les revenus actuels sont faibles (peu d'avantage à la déduction) car à la sortie, seuls les gains seront fiscalisés (le capital ayant déjà été imposé). Cette flexibilité est une vraie nouveauté du PER.",anecdote:"La non-déduction est particulièrement intéressante pour les profils dont le taux marginal d'imposition va augmenter dans le futur, ou pour alimenter un PER pour financer un achat immobilier en sortie anticipée."},
+  {theme:'PER — Plan Épargne Retraite',type:'qcm',q:"Quelle est la fiscalité à la sortie en capital d'un PER dont les versements ont été déduits fiscalement ?",a:["Exonération totale","PFU de 30% sur la totalité","Capital imposé au barème IR + plus-values au PFU 30%","Exonération si détenu plus de 8 ans"],correct:2,expl:"Pour un PER avec déduction fiscale à l'entrée : à la sortie en capital, la part représentant les versements est imposée au barème progressif de l'impôt sur le revenu (comme un revenu), tandis que les plus-values sont soumises au PFU de 30% (12,8% IR + 17,2% PS).",anecdote:"Le PER est un outil de 'transfert fiscal' : on déduit quand les revenus sont élevés (fort avantage) et on paie l'impôt à la retraite (généralement à un taux plus faible). La performance fiscale dépend de la différence de TMI entre la phase active et la retraite."},
+  // ── IARD ──
+  {theme:'IARD — Fondamentaux',type:'qcm',q:"Que signifie l'acronyme IARD en assurance ?",a:["Incendie, Accidents, Risques Divers","Investissement, Assurance, Remboursement, Dommages","Information, Assurance, Règlement, Dossier","Incapacité, Arrêt, Retraite, Décès"],correct:0,expl:"IARD signifie Incendie, Accidents, Risques Divers. Ce terme générique désigne l'ensemble des assurances de dommages couvrant les biens et la responsabilité (MRH, auto, RC professionnelle...), par opposition aux assurances de personnes (vie, santé, prévoyance).",anecdote:"Les assurances IARD représentent environ 55% des primes d'assurance collectées en France, contre 45% pour les assurances de personnes. L'assurance auto est la branche la plus importante en volume de primes."},
+  {theme:'IARD — Fondamentaux',type:'qcm',q:"Une MRH (Multirisque Habitation) couvre généralement quels risques ?",a:["Incendie uniquement","Incendie, dégâts des eaux, vol, responsabilité civile, bris de glace","Décès et invalidité","Uniquement la responsabilité civile"],correct:1,expl:"Une MRH standard couvre : incendie et explosion, dégâts des eaux, vol et vandalisme, bris de glace, responsabilité civile vie privée, catastrophes naturelles et technologiques. Des garanties optionnelles peuvent être ajoutées (protection juridique, équipements électriques...).",anecdote:"En France, l'assurance habitation est obligatoire pour les locataires (loi du 6 juillet 1989). Elle est fortement recommandée pour les propriétaires occupants, même si non obligatoire légalement."},
+  {theme:'IARD — Fondamentaux',type:'vf',q:"La responsabilité civile locataire (garantie incendie-dégâts des eaux) est obligatoire pour tout locataire en France.",a:["Vrai","Faux"],correct:0,expl:"VRAI. La loi du 6 juillet 1989 (loi Mermaz) impose à tout locataire d'une résidence principale de souscrire une assurance couvrant au minimum les risques locatifs (incendie, dégâts des eaux, explosion). Le propriétaire peut résilier le bail en cas de non-respect de cette obligation.",anecdote:"Si le locataire ne s'assure pas malgré une mise en demeure, le propriétaire peut souscrire une assurance à sa place et lui en facturer le coût. C'est une pratique légale mais rare."},
+  {theme:'IARD — Fondamentaux',type:'qcm',q:"Qu'est-ce que la valeur à neuf en assurance habitation ?",a:["La valeur marchande du bien sur le marché immobilier","Le remboursement du sinistre sans déduction de vétusté","Le coût de reconstruction de l'immeuble entier","La valeur du bien divisée par 2"],correct:1,expl:"La garantie valeur à neuf permet d'être remboursé de la totalité du coût de remplacement du bien sinistré, sans déduction de vétusté. Sans cette option, l'indemnité est calculée en valeur vénale (valeur marchande au moment du sinistre, qui intègre la dépréciation liée à l'usage).",anecdote:"La différence peut être considérable : une TV achetée 1 000 € il y a 5 ans vaudra peut-être 200 € en valeur vénale (vétusté de 80%), mais 700 € en valeur à neuf (coût de remplacement actuel)."},
+  {theme:'IARD — Fondamentaux',type:'vf',q:"L'assurance auto RC (responsabilité civile) est obligatoire pour tout véhicule terrestre à moteur en France, même s'il ne roule plus.",a:["Vrai","Faux"],correct:0,expl:"VRAI. L'assurance RC auto est obligatoire pour tout véhicule terrestre à moteur, qu'il roule ou non, y compris les véhicules en stationnement. La seule exception est la mise sous séquestre (remise des plaques à la préfecture). Conduire sans assurance est passible d'une amende de 3 750 € et d'une suspension de permis.",anecdote:"Environ 800 000 véhicules circulent sans assurance en France, soit 2% du parc. Le FGAO (Fonds de Garantie des Assurances Obligatoires) indemnise les victimes d'accidents causés par des conducteurs non assurés."},
+  {theme:'IARD — Fondamentaux',type:'qcm',q:"Qu'est-ce qu'une franchise en assurance ?",a:["Le montant de la prime annuelle","La part des dommages qui reste à la charge de l'assuré","L'exclusion de certains risques","La période de carence avant couverture"],correct:1,expl:"La franchise est la part du sinistre qui reste à la charge de l'assuré. Elle peut être absolue (déduite systématiquement) ou relative (si le sinistre dépasse un seuil, l'assureur prend tout en charge). La franchise incite l'assuré à prévenir les petits sinistres.",anecdote:"La franchise moyenne en assurance auto est de 150 à 500 € selon les contrats. Pour l'habitation, elle est souvent de 150 €. Certains contrats premium offrent une franchise zéro en échange d'une prime plus élevée."},
+  {theme:'IARD — Fondamentaux',type:'qcm',q:"Qu'est-ce que le principe indemnitaire en assurance de dommages ?",a:["L'assureur paie toujours une somme fixe forfaitaire","L'indemnité versée ne peut pas dépasser la valeur réelle du bien sinistré","L'assuré peut choisir le montant de son indemnisation","L'assureur peut refuser tout sinistre"],correct:1,expl:"Le principe indemnitaire est un pilier du droit des assurances : l'assurance doit remettre l'assuré dans la situation où il se trouvait avant le sinistre, sans l'enrichir. L'indemnité ne peut donc dépasser la valeur réelle du bien au moment du sinistre. Ce principe s'oppose à l'assurance de personnes (décès, santé) qui est forfaitaire.",anecdote:"La règle proportionnelle de primes s'applique en cas de sous-assurance : si vous assurez un bien pour 50% de sa valeur réelle, vous ne serez remboursé qu'à 50% du sinistre, même partiel."},
+  {theme:'IARD — Fondamentaux',type:'qcm',q:"Qu'est-ce qu'une assurance prévoyance ?",a:["Une assurance pour les biens immobiliers","Un contrat garantissant un revenu en cas d'incapacité, invalidité ou décès","Un plan d'épargne retraite","Une assurance pour les voyages professionnels"],correct:1,expl:"La prévoyance couvre les risques liés à la personne humaine : incapacité temporaire de travail (arrêt maladie), invalidité permanente et décès. Elle verse des indemnités journalières, une rente ou un capital selon les garanties souscrites. Elle complète les prestations insuffisantes de la Sécurité Sociale.",anecdote:"Un cadre en arrêt maladie longue durée peut voir ses revenus chuter de 50 à 70% après l'épuisement des indemnités journalières de la Sécurité Sociale. Une prévoyance solide est donc indispensable, surtout pour les travailleurs indépendants."},
+  // ── CRÉDIT CONSOMMATION ──
+  {theme:'Crédit consommation',type:'qcm',q:"Quel est le montant maximum d'un crédit à la consommation soumis à la loi Lagarde ?",a:["10 000 €","35 000 €","75 000 €","150 000 €"],correct:2,expl:"Les crédits à la consommation concernent les prêts entre 200 € et 75 000 €. En dessous de 200 €, les règles de protection du consommateur ne s'appliquent pas. Au-dessus de 75 000 €, c'est le régime du crédit immobilier qui s'applique. La loi Lagarde (2010) a réformé en profondeur ce cadre.",anecdote:"La loi Lagarde a également plafonné les frais de report d'échéance et renforcé les obligations d'information précontractuelle avec la Fiche d'Information Précontractuelle Européenne Normalisée (FIPEN)."},
+  {theme:'Crédit consommation',type:'qcm',q:"Quel est le délai de rétractation légal après acceptation d'une offre de crédit à la consommation ?",a:["7 jours","14 jours","30 jours","3 jours"],correct:1,expl:"La loi Lagarde accorde 14 jours calendaires de rétractation après acceptation d'une offre de crédit à la consommation. Pendant ce délai, l'emprunteur peut se rétracter sans motif ni pénalité. Les fonds ne peuvent être débloqués qu'à l'issue de ce délai (sauf demande de déblocage anticipé).",anecdote:"Ce délai de 14 jours harmonise la réglementation européenne (directive 2008/48/CE). Avant 2010, le délai n'était que de 7 jours en France. Si le prêteur ne respecte pas ce délai, il perd son droit aux intérêts."},
+  {theme:'Crédit consommation',type:'vf',q:"Le TAEG (Taux Annuel Effectif Global) doit obligatoirement figurer sur toute offre de crédit à la consommation.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Le TAEG est l'indicateur de coût total du crédit obligatoire sur toutes les offres, publicités et contrats de crédit à la consommation. Il inclut le taux nominal, les frais de dossier, les primes d'assurance obligatoires et tout autre frais lié à l'octroi du crédit. C'est le seul indicateur permettant une comparaison fiable.",anecdote:"Un crédit affiché à 5% avec des frais de dossier de 1% et une assurance de 0,5%/an peut avoir un TAEG de 7,5%. Sans le TAEG, les emprunteurs ne pourraient pas comparer les offres de façon objective."},
+  {theme:'Crédit consommation',type:'qcm',q:"Qu'est-ce qu'un crédit renouvelable (anciennement revolving) ?",a:["Un crédit immobilier avec taux variable","Une réserve d'argent disponible qui se reconstitue au fur et à mesure des remboursements","Un prêt personnel classique avec une durée fixe","Un découvert autorisé permanent"],correct:1,expl:"Le crédit renouvelable est une réserve d'argent disponible (entre 500 € et plusieurs milliers d'euros) que l'emprunteur peut utiliser en tout ou partie. Au fur et à mesure des remboursements, la réserve se reconstitue. C'est un crédit onéreux (taux souvent proche du taux d'usure) et potentiellement risqué.",anecdote:"La loi Lagarde (2010) a renforcé les protections autour du crédit revolving : obligation d'une offre alternative de prêt personnel, consultation du FICP, mention claire du coût. La loi Hamon (2014) a encore renforcé ces règles."},
+  {theme:'Crédit consommation',type:'qcm',q:"Qu'est-ce que le fichier FICP ?",a:["Fichier des Informations sur les Crédits aux Particuliers","Fichier des Incidents de remboursement des Crédits aux Particuliers","Fichier Central des Chèques de Paris","Fichier International du Crédit Professionnel"],correct:1,expl:"Le FICP (Fichier des Incidents de remboursement des Crédits aux Particuliers) est géré par la Banque de France. Il recense les incidents de remboursement de crédits (2 échéances impayées) et les dossiers de surendettement. Toute banque doit le consulter avant d'accorder un nouveau crédit.",anecdote:"La durée d'inscription au FICP est de 5 ans pour un incident de crédit et jusqu'à 7 ans pour un plan de surendettement. Le fichier recense environ 2,5 millions de personnes. Une inscription au FICP n'interdit pas l'ouverture d'un compte courant."},
+  {theme:'Crédit consommation',type:'vf',q:"Un découvert bancaire non régularisé dépassant 3 mois consécutifs doit être requalifié en crédit à la consommation par la banque.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Si un découvert non autorisé ou une avance dépasse un seuil de 200 € et dure plus de 3 mois consécutifs, la banque a l'obligation légale de proposer un crédit à la consommation en bonne et due forme avec toutes ses protections (TAEG, délai de rétractation, informations précontractuelles).",anecdote:"Cette règle protège les consommateurs qui s'endettent progressivement via leur découvert sans en mesurer le coût réel. Les agios sur découverts peuvent atteindre des taux très élevés, proches du taux d'usure."},
+  {theme:'Crédit consommation',type:'qcm',q:"Durée maximale d'inscription au FICP pour un incident de remboursement de crédit ?",a:["2 ans","3 ans","5 ans","7 ans"],correct:2,expl:"La durée maximale d'inscription au FICP est de 5 ans pour un incident de remboursement de crédit (à compter de la date de l'incident, si celui-ci n'a pas été régularisé). Pour un plan de surendettement, l'inscription dure jusqu'à la fin du plan, dans la limite de 7 ans.",anecdote:"L'inscription au FICP est levée immédiatement si l'incident est régularisé (dette remboursée). La banque créancière a 30 jours pour informer la Banque de France de la régularisation."},
+  // ── CRÉDIT IMMOBILIER ──
+  {theme:'Crédit immobilier',type:'qcm',q:"Quel est le taux d'endettement maximal fixé par le HCSF pour les crédits immobiliers en 2026 ?",a:["25%","30%","33%","35%"],correct:3,expl:"Depuis le 1er janvier 2022, les normes du HCSF (Haut Conseil de Stabilité Financière) sont contraignantes pour les banques. Le taux d'effort maximal est de 35% des revenus nets avant impôts, assurance emprunteur incluse. Cette règle remplace l'ancienne recommandation informelle de 33%.",anecdote:"Le taux d'effort = (ensemble des charges de crédit + loyer si locataire) / revenus nets avant impôts. L'assurance emprunteur est incluse dans les charges depuis 2021, ce qui a légèrement durci les conditions d'octroi."},
+  {theme:'Crédit immobilier',type:'qcm',q:"Quelle est la durée maximale d'un crédit immobilier selon les normes HCSF 2026 ?",a:["20 ans","25 ans en général, 27 ans en VEFA ou rénovation","30 ans","Pas de limite légale"],correct:1,expl:"La durée maximale est de 25 ans pour un achat classique. Elle peut être portée à 27 ans pour un achat en VEFA (vente en l'état futur d'achèvement) ou lorsque des travaux représentant au moins 10% du coût total sont prévus. Ces dérogations reconnaissent le délai entre l'achat et la livraison.",anecdote:"La durée moyenne des crédits immobiliers accordés en France est d'environ 20 ans, bien en dessous du maximum légal. Plus la durée est longue, plus le coût total du crédit augmente, mais plus la mensualité est faible."},
+  {theme:'Crédit immobilier',type:'qcm',q:"Quel est le délai légal de réflexion après réception d'une offre de prêt immobilier ?",a:["7 jours","10 jours","14 jours","21 jours"],correct:1,expl:"La loi Scrivener II impose un délai de réflexion de 10 jours minimum après réception de l'offre de prêt. L'emprunteur NE PEUT PAS accepter avant le 11e jour. Ce délai est d'ordre public et ne peut être raccourci même avec l'accord des parties. Une acceptation prématurée est nulle.",anecdote:"Ce délai de réflexion incompressible protège les emprunteurs des décisions précipitées. Il peut être utilisé pour comparer plusieurs offres ou consulter un courtier. L'offre est valable au minimum 30 jours."},
+  {theme:'Crédit immobilier',type:'vf',q:"Le TAEG d'un crédit immobilier inclut le taux nominal, les frais de dossier, les frais de garantie ET la prime d'assurance emprunteur.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Le TAEG immobilier intègre tous les coûts obligatoires : taux nominal, frais de dossier, frais de garantie (hypothèque ou caution), prime d'assurance emprunteur obligatoire, et frais d'ouverture de compte éventuels. C'est l'indicateur de comparaison standardisé imposé par la loi.",anecdote:"L'assurance emprunteur peut représenter jusqu'à 30% du coût total d'un crédit immobilier sur 20 ans. La loi Lemoine (2022) permet désormais de la changer à tout moment, ce qui peut générer des économies importantes."},
+  {theme:'Crédit immobilier',type:'qcm',q:"Qu'est-ce que le PTZ (Prêt à Taux Zéro) en 2026 ?",a:["Un prêt accordé directement par l'État aux acheteurs","Un prêt sans intérêt distribué par les banques, réservé aux primo-accédants","Un crédit à taux 0% pour tous les acquéreurs","Un prêt des collectivités locales"],correct:1,expl:"Le PTZ est un prêt sans intérêt distribué par les banques conventionnées avec l'État, réservé aux primo-accédants sous conditions de ressources. En 2026, il est ouvert sur tout le territoire pour les logements neufs collectifs. L'État rembourse les intérêts à la banque en lieu et place de l'emprunteur.",anecdote:"Le PTZ peut financer jusqu'à 50% de l'opération dans les zones tendues (A, A bis, B1). Remboursement différé possible selon les revenus (jusqu'à 15 ans avant le début des remboursements)."},
+  {theme:'Crédit immobilier',type:'qcm',q:"Qu'est-ce qu'une hypothèque comme garantie d'un crédit immobilier ?",a:["Une assurance obligatoire sur le bien","Une garantie réelle sur le bien immobilier permettant à la banque de le saisir en cas de non-remboursement","Un dépôt de garantie sur un compte bloqué","Un cautionnement personnel de l'emprunteur"],correct:1,expl:"L'hypothèque est une sûreté réelle : elle donne à la banque prêteuse un droit de préférence sur le bien immobilier financé. En cas de défaut de paiement, la banque peut demander la saisie et la vente forcée du bien pour se rembourser. Elle nécessite un acte notarié et est inscrite au registre de la publicité foncière.",anecdote:"L'hypothèque est plus coûteuse que le cautionnement (frais de notaire + taxe de publicité foncière). Elle est obligatoirement levée lorsque le crédit est remboursé (mainlevée), également payante. La plupart des banques préfèrent désormais le cautionnement."},
+  {theme:'Crédit immobilier',type:'qcm',q:"Qu'est-ce qu'un organisme de caution (type Crédit Logement) comme garantie de crédit immobilier ?",a:["Une assurance décès-invalidité","Un organisme qui se porte garant à la place d'une hypothèque, plus rapide et moins coûteux","Un co-emprunteur solidaire","Une garantie de l'État"],correct:1,expl:"Le cautionnement par un organisme spécialisé (Crédit Logement, CAMCA, CNP Caution...) remplace l'hypothèque dans 60% des crédits immobiliers. L'organisme se porte garant auprès de la banque. En cas de défaillance, il rembourse la banque puis se retourne contre l'emprunteur. Plus rapide et moins coûteux que l'hypothèque.",anecdote:"Avec Crédit Logement, l'emprunteur verse une commission de cautionnement + une contribution à un fonds mutuel. À la fin du crédit, une partie du fonds mutuel peut être restituée selon les conditions. C'est la garantie la plus courante en France."},
+  {theme:'Crédit immobilier',type:'vf',q:"La loi Scrivener II protège l'emprunteur immobilier en imposant un délai de réflexion de 10 jours avant qu'il puisse accepter l'offre de prêt.",a:["Vrai","Faux"],correct:0,expl:"VRAI. La loi Scrivener II (loi du 13 juillet 1979, codifiée aux articles L313-1 et suivants du Code de la Consommation) impose ce délai de réflexion incompressible de 10 jours. Elle impose également des mentions obligatoires dans l'offre et une durée de validité minimum de 30 jours.",anecdote:"La loi Scrivener I (1978) concerne le crédit à la consommation, la loi Scrivener II (1979) le crédit immobilier. Ces deux lois ont posé les bases de la protection des emprunteurs en France, bien avant les directives européennes."},
+  // ── PIÈCES DOSSIER CRÉDIT ──
+  {theme:'Pièces dossier de crédit',type:'qcm',q:"Quels justificatifs de revenus sont demandés pour un salarié dans un dossier de crédit ?",a:["Uniquement le dernier bulletin de salaire","3 derniers bulletins de salaire + dernier avis d'imposition","Contrat de travail uniquement","Attestation employeur uniquement"],correct:1,expl:"Pour un salarié, les justificatifs standard sont : les 3 derniers bulletins de salaire (pour vérifier la stabilité des revenus), le dernier avis d'imposition (ou avis de situation déclarative), et éventuellement le contrat de travail (pour les CDD ou récents titularisés). D'autres pièces peuvent être demandées selon le profil.",anecdote:"Pour les CDD, intérimaires ou professions à revenus variables, les banques peuvent demander 2 à 3 ans de bulletins. Un bilan de compétences ou une lettre d'engagement de l'employeur peut parfois renforcer un dossier fragile."},
+  {theme:'Pièces dossier de crédit',type:'qcm',q:"Quel justificatif d'identité est requis pour un dossier de crédit immobilier ?",a:["Uniquement le permis de conduire","CNI ou passeport en cours de validité","Tout document officiel avec photo","Carte vitale"],correct:1,expl:"La pièce d'identité requise est la CNI (Carte Nationale d'Identité) ou le passeport en cours de validité. Pour les ressortissants étrangers, le titre de séjour valide est requis. Le permis de conduire seul n'est généralement pas accepté comme pièce d'identité principale pour un crédit immobilier.",anecdote:"Dans le cadre du KYC (Know Your Customer) et de la LCB-FT, la banque est obligée de vérifier l'identité du client et de conserver une copie des pièces justificatives. Une pièce périmée rend le dossier incomplet."},
+  {theme:'Pièces dossier de crédit',type:'vf',q:"Les relevés de compte des 3 derniers mois sont systématiquement demandés pour un dossier de crédit immobilier.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Les 3 derniers relevés de tous les comptes bancaires sont demandés pour analyser le comportement financier du client : régularité des revenus, niveau d'épargne, découverts éventuels, crédits en cours, prélèvements réguliers. Ces relevés permettent d'évaluer la gestion budgétaire et la capacité d'épargne de l'emprunteur.",anecdote:"Les relevés de compte révèlent beaucoup sur le profil financier : un client avec des incidents récurrents de paiement, même de faible montant, peut se voir refuser un crédit malgré des revenus suffisants."},
+  {theme:'Pièces dossier de crédit',type:'qcm',q:"Pour un dossier de crédit immobilier, quel document prouve l'existence du projet immobilier ?",a:["Un bon de réservation suffit","Le compromis ou la promesse de vente","Une attestation du notaire","Un devis de l'agence immobilière"],correct:1,expl:"Le compromis de vente (ou promesse synallagmatique de vente) ou la promesse unilatérale de vente est le document contractuel qui officialise l'accord entre l'acheteur et le vendeur. Il déclenche la constitution du dossier de crédit et fixe la date limite d'obtention du financement (condition suspensive).",anecdote:"La condition suspensive d'obtention du prêt est une protection légale obligatoire dans tout compromis immobilier. Si le crédit est refusé dans les conditions prévues, l'acheteur récupère son dépôt de garantie intégralement."},
+  {theme:'Pièces dossier de crédit',type:'qcm',q:"Pour un travailleur non salarié (TNS), quels documents de revenus sont demandés ?",a:["3 derniers bulletins de salaire","2 derniers avis d'imposition ou 3 derniers bilans + K-bis + statuts","Attestation de revenu Pôle emploi","Contrat de travail"],correct:1,expl:"Pour un TNS (artisan, commerçant, profession libérale, gérant), les banques demandent généralement : les 2 ou 3 derniers avis d'imposition (ou bilans comptables certifiés), l'extrait K-bis de moins de 3 mois, les statuts de la société, et parfois les liasses fiscales. Les revenus retenus sont généralement la moyenne des 2-3 dernières années.",anecdote:"Les revenus d'un TNS sont souvent moins stables que ceux d'un salarié, d'où l'exigence d'une analyse sur plusieurs années. Un chiffre d'affaires en croissance régulière est valorisé. La première année d'activité rend souvent difficile l'accès au crédit immobilier."},
+  {theme:'Pièces dossier de crédit',type:'qcm',q:"Quel document justifie les charges de crédit existantes dans un dossier de prêt immobilier ?",a:["Une attestation bancaire","Les tableaux d'amortissement de tous les crédits en cours","Une déclaration sur l'honneur","L'avis d'imposition uniquement"],correct:1,expl:"Les tableaux d'amortissement de tous les crédits en cours (immobilier, auto, personnel, revolving) permettent de connaître précisément le montant des mensualités restantes et la date de fin de chaque crédit. Ces informations sont indispensables pour calculer le taux d'endettement exact.",anecdote:"Certaines banques acceptent les relevés de compte comme preuve des charges de crédit. D'autres exigent les tableaux d'amortissement officiels. En cas de doute, mieux vaut fournir les deux."},
+  // ── REVENUS ET CHARGES ──
+  {theme:'Revenus et charges crédit',type:'qcm',q:"Pour un salarié, à quelle hauteur les revenus nets sont-ils pris en compte dans le calcul du taux d'endettement ?",a:["70% (décote pour risque)","80%","100% (hors primes exceptionnelles)","110% si CDI"],correct:2,expl:"Les revenus nets avant impôts d'un salarié en CDI sont pris à 100% dans le calcul du taux d'endettement. En revanche, les primes exceptionnelles (primes de performance variables, 13e mois si non contractuel) sont généralement exclues ou prises partiellement. Les heures supplémentaires régulières peuvent être intégrées.",anecdote:"Depuis la réforme fiscale de 2019 (prélèvement à la source), les banques analysent les revenus nets avant impôts pour calculer le taux d'endettement, ce qui standardise la comparaison entre différents profils fiscaux."},
+  {theme:'Revenus et charges crédit',type:'qcm',q:"À quelle hauteur les revenus locatifs sont-ils généralement pris en compte dans un dossier de crédit ?",a:["100%","70% (abattement de 30% pour charges et risque de vacance)","50%","Pas du tout"],correct:1,expl:"Les revenus locatifs sont généralement retenus à 70% pour tenir compte des charges (taxe foncière, charges de copropriété, travaux, frais de gestion) et du risque de vacance locative. Certaines banques appliquent une compensation entre les revenus locatifs et les mensualités du crédit immobilier locatif.",anecdote:"La méthode de calcul des revenus locatifs varie selon les banques. La méthode dite 'différentielle' consiste à ne prendre en compte que la différence positive entre les loyers perçus et la mensualité du crédit locatif, ce qui favorise les investisseurs."},
+  {theme:'Revenus et charges crédit',type:'vf',q:"Les allocations familiales versées par la CAF sont systématiquement retenues comme revenus stables dans un dossier de crédit.",a:["Vrai","Faux"],correct:1,expl:"FAUX. Les allocations familiales ne sont généralement pas retenues comme revenus stables, car elles cessent lorsque les enfants grandissent (fin à 20 ans) et dépendent du nombre d'enfants à charge. Certaines banques acceptent de les prendre en compte partiellement et temporairement, mais ce n'est pas une règle générale.",anecdote:"En revanche, les pensions d'invalidité, les rentes viagères et certaines allocations spécifiques peuvent être retenues si elles sont permanentes et justifiées. Chaque banque a sa propre politique d'analyse des revenus non salariaux."},
+  {theme:'Revenus et charges crédit',type:'qcm',q:"Qu'est-ce que le reste à vivre dans l'analyse d'un dossier de crédit ?",a:["Le solde du compte courant au jour J","Le revenu disponible après déduction de toutes les charges de crédit et du loyer éventuel","La capacité d'épargne mensuelle théorique","Le montant de l'apport personnel"],correct:1,expl:"Le reste à vivre est le revenu mensuel net qui reste à disposition du foyer après paiement de toutes les charges financières (mensualités de crédit, loyer si locataire). C'est un indicateur complémentaire au taux d'endettement : un taux de 35% sur des revenus de 10 000 € laisse un reste à vivre confortable, pas sur des revenus de 1 500 €.",anecdote:"Le HCSF ne fixe pas de seuil minimal de reste à vivre, mais les banques utilisent des grilles internes. En général, un reste à vivre inférieur à 800-1 000 €/mois par personne adulte peut conduire à un refus même si le taux d'endettement est sous les 35%."},
+  {theme:'Revenus et charges crédit',type:'vf',q:"Une pension alimentaire reçue régulièrement peut être intégrée comme revenu dans un dossier de crédit immobilier.",a:["Vrai","Faux"],correct:0,expl:"VRAI, sous conditions. Une pension alimentaire régulière, fixée par jugement définitif et effectivement perçue depuis au moins un an, peut être intégrée dans les revenus retenus. La banque demandera le jugement de divorce ou la convention homologuée et les justificatifs de versement (relevés bancaires).",anecdote:"La pension alimentaire versée, elle, est considérée comme une charge déductible des revenus. Un débiteur de pension alimentaire verra donc sa capacité d'emprunt réduite d'autant."},
+  // ── NORMES HCSF ──
+  {theme:'Normes HCSF',type:'qcm',q:"Que signifie HCSF ?",a:["Haut Comité de Sécurité Financière","Haut Conseil de Stabilité Financière","Haute Commission de Supervision Financière","Haut Comité de Surveillance des Fonds"],correct:1,expl:"Le HCSF (Haut Conseil de Stabilité Financière) est l'autorité macroprudentielle française, présidée par le ministre de l'Économie. Il a pour mission de surveiller le système financier dans son ensemble et de prévenir les risques systémiques. Depuis janvier 2022, ses recommandations sur le crédit immobilier sont contraignantes.",anecdote:"Le HCSF a été créé par la loi de séparation et de régulation des activités bancaires du 26 juillet 2013, en réponse à la crise financière de 2008. Il réunit la Banque de France, l'ACPR, l'AMF et le Trésor."},
+  {theme:'Normes HCSF',type:'qcm',q:"Depuis quand les normes HCSF sur le crédit immobilier (35% / 25 ans) sont-elles contraignantes pour les banques ?",a:["Juillet 2019","Janvier 2021","Janvier 2022","Juillet 2023"],correct:2,expl:"Les normes du HCSF sont devenues juridiquement contraignantes pour les banques depuis le 1er janvier 2022 (décision du 14 septembre 2021). Avant cette date, elles n'avaient qu'une valeur de recommandation, même si les banques les respectaient déjà en grande partie.",anecdote:"Avant 2022, certaines banques accordaient des crédits avec un taux d'endettement de 40% voire plus pour des profils excellents (hauts revenus, patrimoine important). La règle des 35% est désormais un vrai plafond légal."},
+  {theme:'Normes HCSF',type:'qcm',q:"Quel pourcentage de dossiers de crédits immobiliers peut déroger aux normes HCSF (35% / 25 ans) ?",a:["5%","10%","20%","30%"],correct:2,expl:"Les banques peuvent déroger aux normes HCSF pour au maximum 20% de leur production trimestrielle de crédits immobiliers. Sur ces 20%, au moins 80% doivent concerner des résidences principales, et au moins 30% des primo-accédants. Cela permet de préserver l'accès au crédit pour les profils méritants.",anecdote:"En pratique, les dérogations sont souvent utilisées pour les acquéreurs ayant un fort patrimoine mais un revenu temporairement faible (ex : entrepreneur en début d'activité), ou pour des dossiers présentant un excellent reste à vivre malgré un taux d'endettement supérieur à 35%."},
+  {theme:'Normes HCSF',type:'vf',q:"Un investissement locatif peut bénéficier de la dérogation HCSF dans la limite des 20% de la production trimestrielle.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Les 20% de dérogations HCSF peuvent inclure des investissements locatifs, à condition que 80% de ces dérogations concernent des résidences principales. Donc au maximum 4% de la production (20% × 20%) peut concerner des investissements locatifs en dérogation.",anecdote:"Les investisseurs locatifs sont plus exposés au refus de dérogation, ce qui a complexifié leur accès au crédit depuis 2022. Certains se tournent vers des montages alternatifs (SCI, crédit in fine) pour contourner ces contraintes."},
+  // ── LOIS ASSURANCE EMPRUNTEUR ──
+  {theme:'Lois assurance emprunteur',type:'qcm',q:"Qu'a apporté la loi Lemoine de 2022 en matière d'assurance emprunteur ?",a:["La résiliation annuelle uniquement à date anniversaire","La résiliation à tout moment et sans frais + suppression du questionnaire médical pour les prêts ≤200k€ remboursés avant 60 ans","L'obligation de souscrire l'assurance de la banque","La suppression de toute assurance emprunteur"],correct:1,expl:"La loi Lemoine (28 février 2022) a instauré : 1) la résiliation infra-annuelle (à tout moment, sans frais ni pénalité), 2) la suppression du questionnaire médical pour les prêts inférieurs à 200 000 € remboursés avant 60 ans du souscripteur, 3) le droit à l'oubli pour les anciens malades du cancer après 5 ans de rémission.",anecdote:"Avant la loi Lemoine, l'assurance emprunteur représentait un marché quasi captif pour les banques. La liberté de résiliation à tout moment a ouvert la concurrence et permis des économies de 5 000 à 20 000 € sur la durée d'un prêt pour les profils les plus avantageux."},
+  {theme:'Lois assurance emprunteur',type:'qcm',q:"Qu'a apporté la loi Hamon de 2014 en matière d'assurance emprunteur ?",a:["La résiliation à tout moment","La résiliation possible dans les 12 premiers mois suivant la signature du prêt","L'obligation d'accepter la délégation d'assurance","La résiliation annuelle à date anniversaire"],correct:1,expl:"La loi Hamon (17 mars 2014) a ouvert une fenêtre de résiliation de l'assurance emprunteur pendant les 12 premiers mois suivant la signature de l'offre de prêt. C'était une première étape vers plus de liberté, avant l'amendement Bourquin (résiliation annuelle) et la loi Lemoine (résiliation à tout moment).",anecdote:"La loi Hamon a permis aux emprunteurs de changer d'assurance après la signature, ce qui n'était pas possible avant 2014. En pratique, peu d'emprunteurs en profitaient faute d'information. La loi Lemoine a rendu ce droit vraiment accessible."},
+  {theme:'Lois assurance emprunteur',type:'qcm',q:"Qu'a apporté l'amendement Bourquin de 2017 ?",a:["La résiliation à tout moment","La résiliation annuelle à chaque date anniversaire du contrat","La suppression du questionnaire médical","L'harmonisation des garanties"],correct:1,expl:"L'amendement Bourquin (loi Sapin 2, applicable à partir du 22 février 2018) a permis la résiliation annuelle de l'assurance emprunteur à chaque date anniversaire du contrat, avec un préavis de 2 mois. C'était une avancée par rapport à la loi Hamon (12 mois), mais moins souple que la loi Lemoine (résiliation à tout moment).",anecdote:"La loi Lemoine a rendu l'amendement Bourquin obsolète. Désormais, seule la loi Lemoine s'applique : résiliation à tout moment, sans attendre la date anniversaire."},
+  {theme:'Lois assurance emprunteur',type:'vf',q:"La délégation d'assurance permet à l'emprunteur de choisir une assurance emprunteur auprès d'un assureur autre que la banque prêteuse (loi Lagarde 2010).",a:["Vrai","Faux"],correct:0,expl:"VRAI. La loi Lagarde (1er juillet 2010) a instauré le principe de délégation d'assurance : tout emprunteur peut choisir une assurance emprunteur externe à la banque, à condition que les garanties soient au moins équivalentes à celles du contrat groupe de la banque. La banque ne peut pas refuser ni moduler le taux du crédit.",anecdote:"Avant 2010, les banques imposaient leur propre assurance, généralement plus chère et moins adaptée. Aujourd'hui, les délégations d'assurance représentent environ 30% des contrats souscrits à l'occasion d'un nouveau prêt."},
+  {theme:'Lois assurance emprunteur',type:'qcm',q:"La convention AERAS concerne quelle population ?",a:["Les emprunteurs avec un apport inférieur à 10%","Les personnes ayant ou ayant eu un problème de santé grave","Les retraités de plus de 70 ans","Les emprunteurs en situation de surendettement"],correct:1,expl:"La convention AERAS (s'Assurer et Emprunter avec un Risque Aggravé de Santé) facilite l'accès à l'assurance emprunteur pour les personnes malades ou anciennement malades. Elle prévoit 3 niveaux d'examen des dossiers et un mécanisme de mutualisation des surprimes entre assureurs.",anecdote:"La loi Lemoine (2022) a renforcé AERAS en supprimant le questionnaire médical pour les prêts ≤200 000 € remboursés avant 60 ans, et en étendant le droit à l'oubli à 5 ans après rémission d'un cancer (contre 10 ans auparavant)."},
+  // ── MARCHÉS FINANCIERS ──
+  {theme:'Marchés financiers — Bases',type:'qcm',q:"Qu'est-ce qu'une obligation d'État (OAT) ?",a:["Une action émise par le gouvernement","Un titre de dette émis par l'État pour financer son déficit, avec remboursement à terme et coupons périodiques","Un fond de placement immobilier public","Un bon d'achat de bons du Trésor"],correct:1,expl:"Une obligation est un titre de créance : l'émetteur (État, entreprise) emprunte de l'argent aux investisseurs et s'engage à rembourser le capital à échéance et à verser des intérêts périodiques (coupons). L'OAT (Obligation Assimilable du Trésor) est l'obligation de référence de l'État français.",anecdote:"La France emprunte sur les marchés via des OAT à des durées allant de 2 à 50 ans. Le taux de l'OAT 10 ans est un indicateur clé de la politique monétaire et de la confiance des marchés dans la dette française."},
+  {theme:'Marchés financiers — Bases',type:'qcm',q:"Quelle est la relation entre la hausse des taux d'intérêt et le prix des obligations existantes ?",a:["Si les taux montent, les prix des obligations montent aussi","Si les taux montent, les prix des obligations baissent (relation inverse)","Il n'y a aucune relation","Si les taux montent, les prix des obligations restent stables"],correct:1,expl:"La relation est inverse : quand les taux d'intérêt montent, la valeur des obligations déjà émises à taux fixe plus bas baisse (elles deviennent moins attractives que les nouvelles émissions à taux plus élevé). Inversement, quand les taux baissent, la valeur des obligations existantes monte.",anecdote:"C'est pourquoi les fonds obligataires ont enregistré des pertes importantes en 2022-2023 lors de la hausse rapide des taux directeurs de la BCE. Un investisseur devait comprendre ce mécanisme avant d'investir en obligataire."},
+  {theme:'Marchés financiers — Bases',type:'qcm',q:"Qu'est-ce qu'une SICAV (Société d'Investissement à Capital Variable) ?",a:["Une société cotée en bourse spécialisée dans l'immobilier","Un véhicule de placement collectif dont la valeur varie selon les actifs détenus","Un compte épargne à capital variable","Un fonds de pension réservé aux entreprises"],correct:1,expl:"Une SICAV est un organisme de placement collectif (OPC) : des investisseurs mettent en commun leurs capitaux, gérés par un gérant professionnel. La valeur liquidative (VL) fluctue chaque jour selon l'évolution des actifs (actions, obligations, etc.). Elle est soumise à l'agrément de l'AMF.",anecdote:"Il existe en France deux types d'OPC : les SICAV (dotées de la personnalité morale) et les FCP (Fonds Communs de Placement, copropriété de valeurs mobilières sans personnalité morale). Les deux peuvent être détenus dans un PEA, une assurance vie ou un compte-titres."},
+  {theme:'Marchés financiers — Bases',type:'vf',q:"Le fonds euros d'une assurance vie garantit le capital investi grâce à l'effet cliquet — les intérêts acquis ne peuvent jamais être perdus.",a:["Vrai","Faux"],correct:0,expl:"VRAI. C'est la caractéristique principale du fonds euros : le capital net de frais de gestion est garanti à tout moment, et les intérêts crédités chaque année s'ajoutent définitivement au capital garanti (effet cliquet). C'est une spécificité de l'assurance vie française qui n'existe pas dans la plupart des produits financiers étrangers.",anecdote:"La contrepartie de cette sécurité est un rendement plus modeste que les unités de compte. Les assureurs investissent principalement en obligations d'État pour financer cette garantie, ce qui explique la corrélation avec les taux d'intérêt."},
+  {theme:'Marchés financiers — Bases',type:'qcm',q:"Qu'est-ce qu'une action en bourse ?",a:["Un bon de souscription d'obligations","Un titre de propriété représentant une fraction du capital d'une entreprise","Un certificat de dépôt bancaire","Un contrat d'assurance sur un portefeuille"],correct:1,expl:"Une action est un titre de propriété : son détenteur (l'actionnaire) est copropriétaire de l'entreprise à hauteur de sa participation. Il peut recevoir des dividendes (part des bénéfices distribués) et bénéficier des plus-values si le cours de l'action monte. Mais il supporte aussi le risque de perte en capital.",anecdote:"Le CAC 40 regroupe les 40 plus grandes capitalisations boursières françaises. TotalEnergies, LVMH et BNP Paribas sont parmi les valeurs les plus importantes. L'indice a été créé le 31 décembre 1987 à la base 1 000."},
+  {theme:'Marchés financiers — Bases',type:'qcm',q:"Les cryptomonnaies comme le Bitcoin bénéficient-elles de la garantie des dépôts du FGDR en France ?",a:["Oui, jusqu'à 100 000 €","Oui, mais seulement pour les plateformes agréées AMF","Non, aucune garantie de l'État ou d'un fonds de garantie","Oui, si détenues dans une banque agréée"],correct:2,expl:"Les cryptomonnaies ne bénéficient d'aucune garantie de l'État, du FGDR ou d'un fonds de garantie. Elles ne sont pas des monnaies légales. En cas de faillite d'une plateforme d'échange, les détenteurs peuvent tout perdre. La réglementation MiCA (2024) encadre les acteurs mais ne garantit pas les actifs.",anecdote:"La faillite de FTX (2022) a coûté des milliards à des millions d'investisseurs sans aucun recours légal effectif. C'est l'exemple type du risque de contrepartie sur les plateformes crypto non régulées."},
+  {theme:'Marchés financiers — Bases',type:'qcm',q:"Quelle est la fiscalité des plus-values sur la cession d'actions détenues hors PEA en France (régime PFU) ?",a:["17,2% (prélèvements sociaux uniquement)","30% (12,8% IR + 17,2% PS)","45% (TMI maximum)","Exonération totale après 5 ans"],correct:1,expl:"Les plus-values sur cession d'actions (hors PEA) sont soumises au PFU (Prélèvement Forfaitaire Unique) de 30% : 12,8% d'impôt sur le revenu et 17,2% de prélèvements sociaux. Le contribuable peut opter pour le barème progressif si c'est plus avantageux (revenus modestes).",anecdote:"Le PEA (Plan d'Épargne en Actions) offre une exonération d'IR après 5 ans (seuls les PS de 17,2% s'appliquent). C'est pourquoi il est conseillé de loger les actions européennes dans un PEA pour optimiser la fiscalité long terme."},
+  {theme:'Marchés financiers — Bases',type:'qcm',q:"Qu'est-ce qu'un fonds diversifié (ou fonds équilibré) ?",a:["Un fonds investi à 100% en actions","Un fonds investi uniquement en obligations d'État","Un fonds répartissant les investissements entre actions ET obligations pour équilibrer rendement et risque","Un fonds réservé aux investisseurs institutionnels"],correct:2,expl:"Un fonds diversifié (ou équilibré) combine des actions (pour le potentiel de performance) et des obligations (pour la stabilité). La répartition typique est 50/50 ou 60/40. En période de hausse des actions, la performance est lissée par les obligations, et vice versa. C'est adapté aux profils risque 'modéré'.",anecdote:"La stratégie '60/40' (60% actions / 40% obligations) a été pendant des décennies le benchmark des portefeuilles équilibrés. La corrélation positive actions-obligations de 2022 a remis en question ce paradigme."},
+  // ── SUCCESSION ──
+  {theme:'Succession en France',type:'qcm',q:"Qui sont les héritiers réservataires en droit successoral français ?",a:["Le conjoint et les parents","Les enfants (et à défaut le conjoint survivant)","Les frères et sœurs","Tous les héritiers légaux"],correct:1,expl:"Les héritiers réservataires sont les descendants (enfants, puis petits-enfants par représentation). En l'absence de descendants, le conjoint survivant est réservataire pour 1/4 de la succession. Les ascendants, frères/sœurs et autres parents ne sont pas réservataires et peuvent être déshérités.",anecdote:"La réserve héréditaire est un principe fondamental du droit français qui limite la liberté de tester. Un parent ne peut pas déshériter ses enfants au-delà de la quotité disponible. Cette règle n'existe pas dans certains pays anglo-saxons (liberté totale de tester)."},
+  {theme:'Succession en France',type:'qcm',q:"Quelle est la quotité disponible (part librement transmissible) lorsqu'il y a 1 enfant ?",a:["1/4 du patrimoine","1/3 du patrimoine","1/2 du patrimoine","2/3 du patrimoine"],correct:2,expl:"Avec 1 enfant, la réserve héréditaire est de 1/2 du patrimoine. La quotité disponible est donc de 1/2. Avec 2 enfants : réserve 2/3, quotité disponible 1/3. Avec 3 enfants ou plus : réserve 3/4, quotité disponible 1/4. Plus il y a d'enfants, plus la part librement transmissible diminue.",anecdote:"La quotité disponible permet de favoriser un héritier, son conjoint, ou un tiers (ami, association, partenaire de PACS). L'assurance vie est un outil fréquemment utilisé pour transmettre au-delà de la quotité disponible."},
+  {theme:'Succession en France',type:'qcm',q:"Quel est l'abattement fiscal en ligne directe parent → enfant sur une succession en 2026 ?",a:["50 000 €","100 000 €","150 000 €","200 000 €"],correct:1,expl:"L'abattement en ligne directe (parent → enfant) est de 100 000 € par enfant, renouvelable tous les 15 ans. Au-delà de cet abattement, les droits de succession sont progressifs de 5% à 45%. Ce même abattement s'applique aux donations de son vivant (réductible en cas de succession dans les 15 ans).",anecdote:"Un parent ayant 2 enfants peut transmettre 200 000 € (2 × 100 000 €) sans droits de succession. En faisant des donations régulières (tous les 15 ans), les parents peuvent transmettre leur patrimoine progressivement et optimiser fiscalement."},
+  {theme:'Succession en France',type:'qcm',q:"Quel est le régime fiscal du conjoint survivant sur la succession en France ?",a:["Abattement de 100 000 €","Abattement de 300 000 €","Exonération totale de droits de succession","Taux réduit de 5%"],correct:2,expl:"Depuis la loi TEPA du 21 août 2007, le conjoint survivant et le partenaire de PACS sont totalement exonérés de droits de succession. C'est l'une des protections les plus importantes du droit successoral français. Les frères et sœurs vivant ensemble peuvent aussi bénéficier d'une exonération sous conditions.",anecdote:"Avant 2007, les droits de succession entre époux pouvaient être très lourds (jusqu'à 40%). La loi TEPA a révolutionné la protection du conjoint survivant. C'est pourquoi l'assurance vie peut être moins utile entre époux que pour transmettre aux enfants."},
+  {theme:'Succession en France',type:'vf',q:"L'assurance vie (primes versées avant 70 ans) est totalement hors succession et n'est pas prise en compte dans le calcul des droits des héritiers réservataires.",a:["Vrai","Faux"],correct:0,expl:"VRAI (en principe). L'assurance vie bénéficie d'un régime hors succession : les capitaux sont versés directement aux bénéficiaires désignés. Toutefois, des exceptions existent : en cas de 'primes manifestement exagérées' par rapport au patrimoine et aux revenus, les héritiers peuvent demander la réintégration en succession.",anecdote:"Le caractère 'hors succession' de l'assurance vie est parfois contesté devant les tribunaux lorsque les primes versées ont été disproportionnées (ex : 90% du patrimoine investi en assurance vie au détriment des héritiers réservataires)."},
+  {theme:'Succession en France',type:'qcm',q:"Quel abattement s'applique sur les capitaux décès d'une assurance vie issus de primes versées APRÈS 70 ans ?",a:["Aucun abattement","30 500 € partagé entre tous les bénéficiaires","152 500 € par bénéficiaire","Exonération totale"],correct:1,expl:"Pour les primes versées après 70 ans, seul un abattement global de 30 500 € est accordé (partagé entre tous les bénéficiaires). Au-delà, les capitaux sont réintégrés dans la succession et soumis aux droits de succession ordinaires. En revanche, les intérêts et plus-values restent exonérés.",anecdote:"C'est pourquoi il est conseillé de verser les primes d'assurance vie AVANT 70 ans pour optimiser la transmission. L'abattement de 152 500 € par bénéficiaire sur les primes avant 70 ans est bien plus avantageux que les 30 500 € globaux après 70 ans."},
+  {theme:'Succession en France',type:'qcm',q:"Qu'est-ce qu'une donation ?",a:["Un testament désignant ses héritiers","Un acte juridique de transmission de patrimoine de son vivant, irrévocable","Un legs en faveur d'une association","Un mandat de protection future"],correct:1,expl:"Une donation est un acte juridique par lequel une personne (le donateur) transmet irrévocablement un bien ou une somme d'argent à une autre personne (le donataire) de son vivant. Elle peut être simple (sans condition), avec charge (obligation pour le bénéficiaire), ou démembrée (donation de la nue-propriété avec réserve d'usufruit).",anecdote:"La donation-partage permet de transmettre et de répartir le patrimoine entre tous ses héritiers de son vivant, en fixant la valeur des biens à la date de la donation (avantage en cas d'appréciation ultérieure). C'est un outil de prévention des conflits familiaux."},
+  {theme:'Succession en France',type:'qcm',q:"Quel est le délai légal pour déclarer une succession auprès des impôts en France ?",a:["3 mois","6 mois en France (12 mois pour un décès à l'étranger)","1 an","2 ans"],correct:1,expl:"La déclaration de succession doit être déposée dans les 6 mois du décès si celui-ci a eu lieu en France métropolitaine. Ce délai est de 12 mois si le décès a eu lieu à l'étranger ou dans les DOM-TOM. Au-delà, des intérêts de retard et des pénalités s'appliquent.",anecdote:"Les droits de succession doivent être payés en même temps que la déclaration, ce qui peut poser des problèmes de liquidités si les héritiers doivent attendre la vente d'un bien immobilier. Un crédit 'in fine' peut être utilisé pour financer les droits en attendant la vente."},
+  // ── RÉGIMES MATRIMONIAUX ──
+  {theme:'Régimes matrimoniaux',type:'qcm',q:"Quel est le régime matrimonial par défaut en France en l'absence de contrat de mariage ?",a:["La séparation de biens","La communauté universelle","La communauté réduite aux acquêts","La participation aux acquêts"],correct:2,expl:"Sans contrat de mariage, les époux sont soumis à la communauté réduite aux acquêts. Dans ce régime, les biens acquis pendant le mariage sont communs (acquêts), tandis que les biens propres (possédés avant le mariage ou reçus par héritage/donation) restent personnels à chaque époux.",anecdote:"90% des mariés en France n'ont pas de contrat de mariage. Pour les entrepreneurs, professions libérales ou personnes ayant un patrimoine préexistant important, un contrat de séparation de biens est souvent conseillé."},
+  {theme:'Régimes matrimoniaux',type:'qcm',q:"Sous le régime de séparation de biens, que se passe-t-il en cas de divorce ?",a:["Le patrimoine commun est partagé à 50/50","Chaque époux récupère ses biens propres sans partage, il n'y a pas de communauté","L'époux le plus riche compense l'autre","Le juge décide du partage selon les revenus"],correct:1,expl:"Sous séparation de biens, chaque époux reste propriétaire de ses biens personnels, qu'il s'agisse de biens acquis avant ou pendant le mariage. En cas de divorce, chacun repart avec ses propres biens. Il n'y a pas de patrimoine commun à partager, sauf les biens achetés en indivision.",anecdote:"La séparation de biens est le régime le plus protecteur pour un entrepreneur : en cas de difficultés professionnelles, les créanciers de l'entreprise ne peuvent pas saisir les biens du conjoint qui ne sont pas co-débiteurs."},
+  {theme:'Régimes matrimoniaux',type:'vf',q:"Sous le régime de la communauté universelle, tous les biens (y compris ceux possédés avant le mariage et ceux reçus par héritage) sont communs aux deux époux.",a:["Vrai","Faux"],correct:0,expl:"VRAI. La communauté universelle est le régime le plus communautaire : TOUS les biens, quelle que soit leur origine (acquêts, biens propres antérieurs, héritages, donations) entrent dans la masse commune. Ce régime est souvent associé à une clause d'attribution intégrale au survivant (protection maximale du conjoint).",anecdote:"La communauté universelle avec clause d'attribution intégrale est plébiscitée par les couples sans enfant qui souhaitent protéger au maximum le conjoint survivant. Elle peut toutefois pénaliser les enfants d'un premier lit."},
+  {theme:'Régimes matrimoniaux',type:'qcm',q:"Quel régime matrimonial est le plus adapté pour protéger le patrimoine personnel d'un entrepreneur vis-à-vis des risques professionnels ?",a:["Communauté réduite aux acquêts","Communauté universelle","Séparation de biens","Participation aux acquêts"],correct:2,expl:"La séparation de biens protège le patrimoine personnel du conjoint des dettes professionnelles. Si l'entrepreneur est en nom propre (EI), ses biens personnels sont à l'abri des créanciers professionnels si son conjoint est en séparation de biens. Ce régime est vivement recommandé aux chefs d'entreprise.",anecdote:"Depuis la réforme de 2022, l'entrepreneur individuel (EI) bénéficie automatiquement d'une séparation de patrimoine entre biens professionnels et personnels. Mais le régime matrimonial de séparation de biens reste une protection supplémentaire, notamment vis-à-vis des cautions personnelles."},
+  {theme:'Régimes matrimoniaux',type:'qcm',q:"Qu'implique le PACS pour la gestion des patrimoines en l'absence de convention particulière ?",a:["Communauté universelle automatique","Séparation des patrimoines par défaut — chacun reste propriétaire de ses biens","Communauté réduite aux acquêts comme le mariage","Indivision obligatoire de tous les biens"],correct:1,expl:"Depuis la réforme de 2006, les partenaires de PACS sont soumis à la séparation des patrimoines par défaut. Chaque partenaire reste propriétaire de ses biens personnels. Ils peuvent déroger à ce principe par une convention d'indivision. Le PACS n'offre pas les mêmes protections successorales que le mariage (pas de réserve héréditaire pour le partenaire).",anecdote:"Un point crucial : le partenaire de PACS est exonéré de droits de succession (comme le conjoint marié), mais n'est pas héritier légal. Sans testament, le partenaire de PACS ne reçoit rien. Un testament est donc indispensable entre partenaires de PACS."},
+  // ── STATUTS DE SOCIÉTÉS ──
+  {theme:'Statuts de sociétés',type:'qcm',q:"Quelle est la principale différence entre une SARL et une SAS ?",a:["La SARL est cotée en bourse, pas la SAS","La SARL est dirigée par un gérant avec des règles rigides, la SAS par un président avec grande liberté statutaire","La SARL est réservée aux professions libérales","La SAS ne peut pas avoir de salariés"],correct:1,expl:"La SARL (Société à Responsabilité Limitée) est dirigée par un ou plusieurs gérants, avec des règles légales rigides (formalisme important, régime social du gérant majoritaire = TNS). La SAS (Société par Actions Simplifiée) est dirigée par un président, offre une grande liberté statutaire et les dirigeants sont assimilés salariés.",anecdote:"La SAS est aujourd'hui la forme sociale la plus créée en France devant la SARL. Sa flexibilité statutaire et le statut assimilé salarié du président (qui ouvre droit à l'assurance chômage via la GSC) la rendent très attractive pour les startups et les entrepreneurs."},
+  {theme:'Statuts de sociétés',type:'vf',q:"En EURL (Entreprise Unipersonnelle à Responsabilité Limitée), l'associé unique est responsable des dettes sur l'ensemble de son patrimoine personnel.",a:["Vrai","Faux"],correct:1,expl:"FAUX. L'EURL (version unipersonnelle de la SARL) offre une responsabilité limitée aux apports : l'associé unique ne peut perdre que ce qu'il a apporté dans la société. Son patrimoine personnel est protégé des dettes de l'EURL, sauf en cas de faute de gestion ou de caution personnelle donnée aux créanciers.",anecdote:"Cette limitation de responsabilité est l'avantage majeur des sociétés (EURL, SARL, SAS) par rapport à l'ancienne entreprise individuelle classique. Depuis la réforme de 2022, l'EI (Entreprise Individuelle) bénéficie aussi d'une séparation automatique des patrimoines."},
+  {theme:'Statuts de sociétés',type:'qcm',q:"Qu'est-ce qu'une SCI (Société Civile Immobilière) et pour quel usage est-elle principalement utilisée ?",a:["Une société cotée spécialisée dans la promotion immobilière","Une structure juridique pour détenir et gérer un patrimoine immobilier à plusieurs","Une SARL dont l'activité principale est la location","Un fonds d'investissement immobilier"],correct:1,expl:"La SCI est une société civile permettant de détenir et gérer un bien immobilier à plusieurs associés. Elle facilite la gestion du patrimoine immobilier familial, la transmission (donation de parts plutôt que du bien entier), et permet un régime fiscal adapté (IR ou IS selon le choix). Elle n'a pas de capital minimum.",anecdote:"La SCI familiale est très utilisée pour organiser la transmission du patrimoine immobilier. En donnant progressivement des parts à ses enfants, les parents peuvent transmettre la propriété tout en conservant la gérance (la gestion du bien)."},
+  {theme:'Statuts de sociétés',type:'qcm',q:"Quel est le capital social minimum pour créer une SARL ou une SAS en France ?",a:["500 €","1 000 €","1 € (pas de minimum légal)","10 000 €"],correct:2,expl:"Depuis la loi NRE de 2001, il n'existe plus de capital minimum légal pour créer une SARL ou une SAS : 1 € suffit juridiquement. Cependant, un capital trop faible peut nuire à la crédibilité vis-à-vis des banques et des partenaires. En pratique, un capital cohérent avec le besoin de financement est recommandé.",anecdote:"Un capital social de 1 € ne signifie pas que l'entreprise peut fonctionner avec 1 € : il faut financer le besoin en fonds de roulement. Les associés peuvent financer la société via des apports en compte courant d'associés, plus flexibles que le capital."},
+  {theme:'Statuts de sociétés',type:'vf',q:"Le gérant majoritaire d'une SARL cotise au régime TNS (Sécurité Sociale des Indépendants), et non au régime général des salariés.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Le gérant majoritaire (détenant plus de 50% des parts) est affilié à la SSI (Sécurité Sociale des Indépendants, ex-RSI). Ses cotisations sociales sont calculées sur sa rémunération. À l'inverse, le gérant minoritaire ou égalitaire de SARL, et le président de SAS, sont assimilés salariés (régime général, cotisations plus élevées mais meilleure couverture).",anecdote:"Le choix entre SARL et SAS a un impact majeur sur le statut social du dirigeant. Le statut TNS du gérant majoritaire de SARL génère des cotisations sociales plus faibles mais une couverture maladie et retraite moins bonne que le régime assimilé salarié de la SAS."},
+  // ── AUTO-ENTREPRENEUR / EI ──
+  {theme:'Auto-entrepreneur & EI',type:'qcm',q:"Quel est le plafond de chiffre d'affaires annuel pour un auto-entrepreneur en prestation de services en 2026 ?",a:["36 800 €","72 600 €","77 700 €","100 000 €"],correct:2,expl:"Le plafond de CA pour un auto-entrepreneur en prestation de services BIC ou BNC est de 77 700 € (doublement du seuil TVA). Pour les activités de vente de marchandises, il est de 188 700 €. Ces seuils sont révisés tous les 3 ans. Au-delà, le statut est perdu et l'entrepreneur doit adopter un autre régime.",anecdote:"Les plafonds de l'auto-entrepreneur ont été rehaussés plusieurs fois depuis la création du statut en 2009. Le doublement du plafond en 2018 (de 33 200 € à 70 000 € pour les services) a étendu son attractivité à des activités générant des revenus plus importants."},
+  {theme:'Auto-entrepreneur & EI',type:'vf',q:"Depuis la réforme de 2022, l'entrepreneur individuel (EI) bénéficie automatiquement d'une séparation entre son patrimoine professionnel et son patrimoine personnel, sans avoir à créer une société.",a:["Vrai","Faux"],correct:0,expl:"VRAI. La loi du 14 février 2022 a créé un patrimoine professionnel protégé de plein droit pour tout entrepreneur individuel (EI). Les créanciers professionnels ne peuvent pas saisir les biens personnels (résidence principale, etc.) sans engagement exprès de l'entrepreneur. C'est une révolution pour les indépendants.",anecdote:"Avant 2022, l'entrepreneur individuel engageait l'intégralité de son patrimoine (perso + pro) pour ses dettes professionnelles, sauf s'il avait opté pour l'EIRL (aujourd'hui supprimée). La réforme de 2022 a rendu cette protection automatique."},
+  {theme:'Auto-entrepreneur & EI',type:'qcm',q:"Quel est le régime social d'un auto-entrepreneur ?",a:["Régime général des salariés","SSI (Sécurité Sociale des Indépendants) avec cotisations proportionnelles au CA encaissé","Pas de régime social","Régime Agricole (MSA)"],correct:1,expl:"L'auto-entrepreneur cotise à la SSI (Sécurité Sociale des Indépendants) avec des taux de cotisations proportionnels au chiffre d'affaires encaissé : environ 12,3% pour la vente, 21,2% pour les services BIC, 21,1% pour les BNC, et 21,1% pour les professions libérales relevant de la CIPAV. Si CA = 0, cotisations = 0.",anecdote:"Le taux réduit de cotisations sociales de l'auto-entrepreneur est son avantage principal par rapport aux autres régimes. Mais cette économie se traduit par une couverture sociale plus faible (retraite, maladie, chômage). Les auto-entrepreneurs doivent souvent compléter par une prévoyance personnelle."},
+  {theme:'Auto-entrepreneur & EI',type:'vf',q:"Un auto-entrepreneur peut cumuler ce statut avec une activité salariée à temps plein en France.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Le cumul salarié + auto-entrepreneur est parfaitement légal. Le salarié doit vérifier l'absence de clause d'exclusivité dans son contrat de travail, s'assurer de ne pas exercer une activité concurrente de son employeur, et respecter ses obligations de loyauté. Certains régimes réglementés (fonctionnaires) ont des restrictions spécifiques.",anecdote:"Le cumul emploi-auto-entrepreneur est très courant : enseignants donnant des cours particuliers, salariés développant une activité de conseil, artisans travaillant comme auto-entrepreneurs le week-end. Il permet de tester une activité sans quitter son emploi principal."},
+  // ── ARGENT AU QUOTIDIEN ──
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce qu'un virement SEPA instantané ?",a:["Un virement classique traité en 1 heure","Un transfert de fonds en moins de 10 secondes, disponible 24h/24 et 7j/7, pour un montant max de 100 000 €","Un virement international entre pays hors UE","Un virement programmé qui s'exécute à date fixe"],correct:1,expl:"Le virement SEPA instantané (SCT Inst) permet des transferts en moins de 10 secondes, 24h/24, 7j/7, y compris les week-ends et jours fériés. Le montant maximum est de 100 000 €. Depuis 2023, les banques européennes ont l'obligation de le proposer. Il est généralement facturé quelques centimes.",anecdote:"En France, les virements instantanés représentaient moins de 5% des virements en 2022. L'obligation pour toutes les banques de l'UE de proposer ce service (au même prix que les virements ordinaires depuis 2025) va transformer les habitudes de paiement."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce qu'un découvert autorisé ?",a:["Un prêt à la consommation de courte durée","Une autorisation écrite de la banque permettant au compte de devenir débiteur dans une limite et une durée fixées contractuellement","Une avance sur salaire accordée automatiquement","Un crédit revolving plafonné à 500 €"],correct:1,expl:"Le découvert autorisé est une facilité de caisse prévue contractuellement dans la convention de compte. La banque s'engage à honorer les opérations dans une limite donnée (souvent 100 à 1 500 €) et pendant une durée limitée. Des agios sont facturés sur le montant utilisé. C'est différent du découvert non autorisé (pénalisé davantage).",anecdote:"Le taux effectif global d'un découvert autorisé peut atteindre 15 à 20% selon les établissements. Pour une utilisation régulière, un crédit revolving ou un crédit à la consommation sera généralement moins onéreux."},
+  {theme:'Argent au quotidien',type:'vf',q:"La banque est obligée d'accorder un découvert autorisé à tout client qui en fait la demande.",a:["Vrai","Faux"],correct:1,expl:"FAUX. L'attribution d'un découvert autorisé est une décision discrétionnaire de la banque. Elle évalue la situation financière du client (revenus, incidents de paiement, fichage FICP/FCC) avant d'accorder cette facilité. Un client en situation précaire ou fiché peut se voir refuser un découvert autorisé.",anecdote:"En revanche, le 'droit au compte' garantit l'ouverture d'un compte avec des services bancaires de base, mais ces services de base n'incluent pas le découvert autorisé. La banque désignée par la Banque de France propose uniquement les opérations courantes."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce que le FICOBA ?",a:["Le Fichier Central des Comptes Bancaires Anonymes","Le Fichier National des Comptes Bancaires et Assimilés, qui recense tous les comptes en France","Le Fichier des Incidents des Comptes des Banques Agréées","Le Fonds d'Indemnisation pour les Clients des Opérations Bancaires Abusives"],correct:1,expl:"Le FICOBA (Fichier national des Comptes Bancaires et Assimilés) est géré par la DGFiP. Il recense tous les comptes bancaires, d'épargne, de titres, d'assurance vie détenus en France. Il est accessible aux administrations (fisc, justice) et permet de retrouver les comptes d'une personne en cas de succession, divorce ou enquête fiscale.",anecdote:"Le FICOBA recense plus de 200 millions de comptes. Depuis 2018, les héritiers peuvent consulter le FICOBA pour identifier les comptes d'un défunt. La banque a l'obligation de déclarer au FICOBA l'ouverture et la clôture de tout compte."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce que le FCC (Fichier Central des Chèques) ?",a:["Un fichier listant les chèques falsifiés","Un fichier géré par la Banque de France recensant les interdits bancaires liés aux chèques sans provision et aux retraits abusifs de carte","Un fichier de fraude aux virements bancaires","Le registre national des chèques de voyage"],correct:1,expl:"Le FCC est géré par la Banque de France. Il recense les personnes frappées d'interdiction bancaire (chèques sans provision non régularisés, retraits abusifs de carte). L'inscription dure 5 ans maximum. La banque doit obligatoirement consulter le FCC avant de remettre un carnet de chèques ou une carte bancaire.",anecdote:"L'interdiction bancaire n'est pas une sanction pénale mais une mesure préventive. Elle interdit uniquement l'émission de chèques (pas les virements ni les cartes de débit). Elle peut être levée immédiatement si tous les chèques impayés sont régularisés."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Quel est le plafond de responsabilité du porteur d'une carte bancaire en cas de paiements sans code PIN avant opposition ?",a:["Responsabilité totale","Aucune responsabilité","Plafond de 50 €","Plafond de 150 €"],correct:2,expl:"Depuis la transposition de la directive DSP2, la responsabilité du porteur est limitée à 50 € pour les opérations sans données de sécurité personnalisées (paiements sans contact, paiements en ligne sans 3D Secure). Pour les opérations avec code PIN, le porteur n'est pas responsable si son comportement n'est pas fautif.",anecdote:"Attention : si la banque prouve une 'négligence grave' du porteur (ex : code PIN noté sur la carte), la responsabilité peut être totale même avant opposition. La définition de la 'négligence grave' est souvent source de litige."},
+  {theme:'Argent au quotidien',type:'vf',q:"Le paiement sans contact (NFC) est limité à 50 € par transaction en France depuis 2020.",a:["Vrai","Faux"],correct:0,expl:"VRAI. Le plafond par transaction du paiement sans contact a été rehaussé de 30 € à 50 € en France le 11 mai 2020, lors du déconfinement post-Covid (mesure sanitaire pour limiter les contacts). Ce plafond européen harmonisé est fixé par la BCE/ABE dans le cadre de DSP2.",anecdote:"Le paiement sans contact représente désormais plus de 60% des transactions par carte en France. Certaines banques proposent de relever ce plafond à 100 € ou plus via leur application mobile, avec authentification biométrique."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce qu'un mandat SEPA ?",a:["Un accord entre banques pour des virements internationaux","Une autorisation donnée par le débiteur à un créancier pour prélever directement sur son compte bancaire","Un document notarial pour la gestion d'un compte","Une procuration bancaire illimitée"],correct:1,expl:"Le mandat SEPA est le document signé par le débiteur autorisant un créancier (EDF, loyer, abonnement...) à effectuer des prélèvements sur son compte. Il comporte une référence unique de mandat (RUM). Le débiteur peut contester tout prélèvement non autorisé dans un délai de 8 semaines.",anecdote:"Le mandat SEPA a remplacé l'autorisation de prélèvement classique en 2014. Sa particularité : c'est le créancier qui conserve le mandat, et non plus la banque. En cas de litige, c'est au créancier de prouver l'existence du mandat."},
+  {theme:'Argent au quotidien',type:'vf',q:"Un chèque en France est valable 1 an et 8 jours à compter de sa date d'émission.",a:["Vrai","Faux"],correct:0,expl:"VRAI. La durée de validité d'un chèque est de 1 an + 8 jours supplémentaires à compter de la date d'émission indiquée sur le chèque. Après ce délai, la banque peut refuser de l'encaisser. Le délai de 8 jours représente le délai de présentation légal.",anecdote:"Contrairement aux idées reçues, un chèque ne 'tombe pas en désuétude' immédiatement après la date inscrite. Le bénéficiaire dispose d'un an pour le présenter. Il est donc déconseillé d'émettre des chèques avec une date future en espérant qu'ils ne seront pas encaissés."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce que l'offre bancaire spécifique (OBS) destinée aux clients en fragilité financière ?",a:["Une offre premium avec tous les services inclus","Une offre plafonnée à environ 3 €/mois avec frais d'incidents limités à 25 €/mois et 20 €/incident","Un compte bancaire gratuit sans aucun frais","Une offre réservée aux mineurs"],correct:1,expl:"L'OBS (aussi appelée offre clients fragiles) est obligatoirement proposée par les banques aux clients en situation de fragilité financière (inscrits FICP, revenus inférieurs à un seuil, ou avec plus de 5 incidents en 30 jours). Elle est plafonnée à environ 3 €/mois et les frais d'incidents sont limités à 25 €/mois et 20 €/incident.",anecdote:"Cette offre a été renforcée par la loi PACTE (2019) et les décisions du Comité consultatif du secteur financier. Elle concerne environ 4 millions de personnes en France. Les banques ont l'obligation de détecter les clients éligibles et de leur proposer proactivement cette offre."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce que le droit au compte en France ?",a:["Le droit de choisir librement sa banque","Le droit pour toute personne résidant en France d'obtenir l'ouverture d'un compte courant via la Banque de France si une banque refuse","Le droit à un compte gratuit dans toutes les banques publiques","Le droit à un découvert autorisé de 100 €"],correct:1,expl:"Le droit au compte (article L312-1 du CMF) permet à toute personne physique ou morale résidant en France, y compris les personnes sans domicile fixe, de demander à la Banque de France de désigner un établissement bancaire tenu d'ouvrir un compte avec les services bancaires de base gratuits.",anecdote:"La Banque de France traite environ 50 000 demandes de droit au compte par an. La banque désignée doit ouvrir le compte dans les 3 jours ouvrés. Les services de base gratuits incluent : tenue de compte, relevé mensuel, carte de retrait, virements, prélèvements et 2 chèques de banque/mois."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce que le service de mobilité bancaire mis en place par la loi Macron ?",a:["La possibilité de transférer son numéro de compte IBAN","Un service gratuit où la nouvelle banque gère le transfert automatique de tous les prélèvements et virements dans un délai de 22 jours ouvrés","Un service de comparaison de tarifs bancaires","La clôture automatique de l'ancien compte"],correct:1,expl:"Depuis le 6 février 2017 (loi Macron), le service Agira (Association pour la Gestion des Informations sur le Risque en Assurance... mais adapté à la mobilité bancaire) oblige la nouvelle banque à prendre en charge le transfert automatique de tous les prélèvements et virements vers le nouveau compte, dans un délai de 22 jours ouvrés, gratuitement.",anecdote:"Malgré ce service, seulement 2 à 3% des Français changent de banque chaque année, contre 10% au Royaume-Uni. Le confort de la procédure ne suffit pas à déclencher la mobilité — les Français restent très attachés à leur banque traditionnelle."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Qu'est-ce qu'un Avis à Tiers Détenteur (ATD) ?",a:["Une notification envoyée aux héritiers d'un compte bancaire décédé","Une procédure permettant à l'administration fiscale ou aux organismes sociaux de saisir directement les fonds d'un débiteur sur son compte bancaire","Un avis de prélèvement automatique entre banques","Un document informant un tiers de la clôture d'un compte"],correct:1,expl:"L'ATD est une procédure administrative (sans intervention d'un tribunal) permettant à l'administration fiscale (DGFiP) ou à certains organismes (URSSAF, CAF) de saisir directement les fonds d'un débiteur sur ses comptes bancaires. La banque doit immédiatement bloquer les fonds et les transférer au créancier.",anecdote:"La banque est obligée d'exécuter un ATD sous peine d'être tenue personnellement responsable des sommes non versées. Elle doit informer le client de la saisie. Le débiteur peut contester l'ATD auprès du Trésor Public, mais les fonds restent bloqués pendant le recours."},
+  {theme:'Argent au quotidien',type:'qcm',q:"Quel est le plafond de la garantie des dépôts du FGDR (Fonds de Garantie des Dépôts et de Résolution) par déposant et par établissement en 2026 ?",a:["70 000 €","100 000 €","250 000 €","500 000 €"],correct:1,expl:"Le FGDR garantit les dépôts jusqu'à 100 000 € par déposant et par établissement. Des garanties renforcées temporaires (jusqu'à 500 000 €) existent pendant 3 mois après certains événements de la vie (vente immobilière, mariage, divorce, héritage, indemnisation d'un sinistre). En cas de faillite, le FGDR doit rembourser dans les 7 jours ouvrés.",anecdote:"Après la faillite de Lehman Brothers (2008), l'Union européenne a harmonisé le plafond de garantie à 100 000 € dans tous les États membres. Ce montant couvre 95% des déposants européens. La garantie s'applique par établissement : un client avec 200 000 € répartis dans 2 banques différentes est entièrement couvert."}
+];
+
+// ==================== ÉTAT ====================
+let state={mode:null,sessionCode:null,players:[],currentQ:0,selectedThemes:[],filteredQuestions:[],revealed:false,timerInterval:null,timerLeft:30,studentName:null,studentColor:null,studentScore:0,studentAnswered:false,studentSelected:null,answersReceived:{}};
+const DB_KEY='bq_b2m_2026';
+function writeDB(d){try{localStorage.setItem(DB_KEY,JSON.stringify(d));}catch(e){}}
+function readDB(){try{return JSON.parse(localStorage.getItem(DB_KEY));}catch(e){return null;}}
+function getColor(i){return COLORS[i%COLORS.length];}
+function initials(n){return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
+function genCode(){return Math.random().toString(36).substr(2,5).toUpperCase();}
+function showScreen(id){['screen-home','screen-lobby','screen-question','screen-podium','screen-student'].forEach(s=>{document.getElementById(s).style.display='none';});document.getElementById(id).style.display='block';}
+
+// ── NAVIGATION ──
+function goHome(){clearInterval(state.timerInterval);state.mode=null;showScreen('screen-home');}
+function backToLobby(){if(!confirm('Revenir au lobby ?'))return;clearInterval(state.timerInterval);showScreen('screen-lobby');const db=readDB();if(db){db.status='lobby';db.question=null;writeDB(db);}}
+function backToStudentJoin(){clearInterval(state.timerInterval);state.studentName=null;state.studentScore=0;document.getElementById('s-waiting').style.display='none';document.getElementById('s-join').style.display='flex';document.getElementById('s-code-input').value='';document.getElementById('s-name-input').value='';}
+
+// ── ACCUEIL ──
+function goLobby(){
+  state.mode='prof';state.sessionCode=genCode();state.players=[];state.currentQ=0;
+  state.selectedThemes=[...new Set(QUESTIONS.map(q=>q.theme))];
+  document.getElementById('session-code').textContent=state.sessionCode;
+  buildThemeGrid();updatePlayersGrid();
+  writeDB({code:state.sessionCode,status:'lobby',players:[],question:null});
+  showScreen('screen-lobby');
+  setTimeout(addDemoPlayers,2000);setInterval(syncFromDB,1000);
+}
+function buildThemeGrid(){const themes=[...new Set(QUESTIONS.map(q=>q.theme))];document.getElementById('theme-grid').innerHTML=themes.map(t=>`<div class="theme-tag active" onclick="toggleTheme('${t.replace(/'/g,"\\'")}',this)">${t}</div>`).join('');}
+function toggleTheme(theme,el){if(state.selectedThemes.includes(theme)){state.selectedThemes=state.selectedThemes.filter(t=>t!==theme);el.classList.remove('active');}else{state.selectedThemes.push(theme);el.classList.add('active');}}
+function addDemoPlayers(){if(state.mode!=='prof')return;const names=['Sophie M.','Lucas D.','Emma R.','Théo B.','Chloé V.','Nathan P.','Inès G.','Hugo L.'];const count=Math.floor(Math.random()*4)+4;for(let i=0;i<Math.min(count,names.length);i++){const db=readDB();if(db&&!db.players.find(p=>p.name===names[i])){db.players.push({name:names[i],color:getColor(i+1),score:0,correct:0});writeDB(db);}}}
+function syncFromDB(){
+  if(state.mode==='prof'){const db=readDB();if(!db)return;if(JSON.stringify(db.players)!==JSON.stringify(state.players)){state.players=db.players||[];updatePlayersGrid();}
+    if(document.getElementById('screen-question').style.display==='block'){document.getElementById('answered-count').textContent=Object.keys(state.answersReceived).length;document.getElementById('total-players-q').textContent=state.players.length;updateAnswerBars();updateAvgScore();}}
+  else if(state.mode==='student'){const db=readDB();if(!db)return;
+    if(db.status==='question'&&db.question&&db.question.index!==state.currentQ){state.currentQ=db.question.index;state.studentAnswered=false;state.studentSelected=null;showStudentQ(db.question);}
+    if(db.status==='ended')showStudentFinal();}
+}
+function updatePlayersGrid(){const g=document.getElementById('players-grid');document.getElementById('pc-num').textContent=state.players.length;g.innerHTML=state.players.map(p=>`<div class="player-chip"><div class="player-avatar" style="background:${p.color}22;color:${p.color}">${initials(p.name)}</div><div class="player-name">${p.name}</div></div>`).join('');document.getElementById('btn-start').disabled=state.players.length<1;}
+
+// ── DÉMARRAGE ──
+function startGame(){state.filteredQuestions=QUESTIONS.filter(q=>state.selectedThemes.includes(q.theme));shuffleArray(state.filteredQuestions);if(state.filteredQuestions.length===0){alert('Sélectionne au moins un thème !');return;}state.currentQ=0;state.players.forEach(p=>{p.score=0;p.correct=0;});showQuestion();}
+function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
+
+// ── QUESTION PROF ──
+function showQuestion(){
+  if(state.currentQ>=state.filteredQuestions.length){endGame();return;}
+  const q=state.filteredQuestions[state.currentQ];
+  state.revealed=false;state.answersReceived={};
+  ['screen-home','screen-lobby','screen-podium','screen-student'].forEach(s=>{document.getElementById(s).style.display='none';});
+  document.getElementById('screen-question').style.display='block';
+  document.getElementById('q-num').textContent=`Q${state.currentQ+1}`;
+  document.getElementById('q-total').textContent=`/ ${state.filteredQuestions.length}`;
+  document.getElementById('progress-fill').style.width=`${(state.currentQ/state.filteredQuestions.length)*100}%`;
+  document.getElementById('q-theme-badge').textContent=q.theme;
+  document.getElementById('q-type-badge').textContent=q.type==='vf'?'VRAI / FAUX':'QCM';
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('explanation-box').style.display='none';
+  document.getElementById('btn-reveal').style.display='inline-block';
+  document.getElementById('btn-next').style.display='none';
+  document.getElementById('total-players-q').textContent=state.players.length;
+  document.getElementById('answered-count').textContent='0';
+  const cont=document.getElementById('answers-container');
+  if(q.type==='vf'){cont.innerHTML=`<div class="q-vf"><div class="vf-btn" id="vf-v">✅ Vrai</div><div class="vf-btn" id="vf-f">❌ Faux</div></div>`;buildBarsVF();}
+  else{const L=['A','B','C','D'];cont.innerHTML=`<div class="answers-grid">${q.a.map((a,i)=>`<div class="answer-card" id="ans-${i}"><div class="letter">${L[i]}</div><div class="answer-text">${a}</div></div>`).join('')}</div>`;buildBarsQCM(q.a.length);}
+  startTimer(q.type==='vf'?20:30);
+  simulateAnswers(q);
+  const db=readDB();if(db){db.status='question';db.question={index:state.currentQ,q:q.q,a:q.a,type:q.type,theme:q.theme};writeDB(db);}
+}
+function simulateAnswers(q){
+  state.players.forEach(p=>{
+    const delay=2000+Math.random()*16000;
+    setTimeout(()=>{
+      if(state.revealed||state.currentQ!==state.filteredQuestions.indexOf(q))return;
+      const c=q.correct;const r=Math.random();let chosen;
+      if(r<0.65)chosen=c;else{const w=q.a.map((_,j)=>j).filter(j=>j!==c);chosen=w[Math.floor(Math.random()*w.length)];}
+      state.answersReceived[p.name]=chosen;
+    },delay);
+  });
+}
+function startTimer(secs){
+  clearInterval(state.timerInterval);state.timerLeft=secs;
+  const ring=document.getElementById('timer-ring');const numEl=document.getElementById('timer-num');
+  const circ=2*Math.PI*24;ring.style.strokeDasharray=circ;
+  const upd=()=>{
+    const frac=state.timerLeft/secs;
+    ring.style.strokeDashoffset=circ*(1-frac);
+    ring.style.stroke=frac>0.4?'#E4003A':frac>0.2?'#f97316':'#ef4444';
+    numEl.textContent=state.timerLeft;
+    if(state.timerLeft<=0){clearInterval(state.timerInterval);revealAnswer();}
+    state.timerLeft--;
+  };upd();state.timerInterval=setInterval(upd,1000);
+}
+function buildBarsQCM(n){const L=['A','B','C','D'];const C=['a','b','c','d'];document.getElementById('answer-bars').innerHTML=Array.from({length:n},(_,i)=>`<div class="ans-bar-wrap"><div class="ans-bar-label"><span>${L[i]}</span><span id="bar-pct-${i}">0%</span></div><div class="ans-bar-track"><div class="ans-bar-fill ${C[i]}" id="bar-fill-${i}" style="width:0%"></div></div></div>`).join('');}
+function buildBarsVF(){document.getElementById('answer-bars').innerHTML=`<div class="ans-bar-wrap"><div class="ans-bar-label"><span>Vrai</span><span id="bar-pct-0">0%</span></div><div class="ans-bar-track"><div class="ans-bar-fill v" id="bar-fill-0" style="width:0%"></div></div></div><div class="ans-bar-wrap"><div class="ans-bar-label"><span>Faux</span><span id="bar-pct-1">0%</span></div><div class="ans-bar-track"><div class="ans-bar-fill f" id="bar-fill-1" style="width:0%"></div></div></div>`;}
+function updateAnswerBars(){const q=state.filteredQuestions[state.currentQ];if(!q)return;const total=state.players.length||1;const counts={};Object.values(state.answersReceived).forEach(a=>{counts[a]=(counts[a]||0)+1;});q.a.forEach((_,i)=>{const p=document.getElementById(`bar-pct-${i}`);const f=document.getElementById(`bar-fill-${i}`);if(!p||!f)return;const c=counts[i]||0;const pct=Math.round(c/total*100);p.textContent=pct+'%';f.style.width=pct+'%';});}
+function updateAvgScore(){if(state.players.length===0)return;const avg=Math.round(state.players.reduce((a,p)=>a+p.score,0)/state.players.length);document.getElementById('avg-score').textContent=avg+' pts';}
+function revealAnswer(){
+  clearInterval(state.timerInterval);state.revealed=true;
+  const q=state.filteredQuestions[state.currentQ];const correct=q.correct;
+  Object.entries(state.answersReceived).forEach(([name,ans])=>{const p=state.players.find(p=>p.name===name);if(!p)return;if(ans===correct){p.score+=100+Math.max(0,state.timerLeft*3);p.correct++;}});
+  if(q.type==='vf'){document.getElementById('vf-v').classList.add(correct===0?'correct':'wrong');document.getElementById('vf-f').classList.add(correct===1?'correct':'wrong');}
+  else{q.a.forEach((_,i)=>{const el=document.getElementById(`ans-${i}`);if(el)el.classList.add(i===correct?'correct':'wrong');});}
+  document.getElementById('expl-text').textContent=q.expl;
+  const anec=document.getElementById('expl-anecdote');
+  if(q.anecdote){anec.textContent='💬 '+q.anecdote;anec.style.display='block';}else{anec.style.display='none';}
+  document.getElementById('explanation-box').style.display='block';
+  document.getElementById('btn-reveal').style.display='none';
+  document.getElementById('btn-next').style.display='inline-block';
+  updateAvgScore();
+  const db=readDB();if(db){db.status='reveal';db.correct=correct;db.players=state.players;writeDB(db);}
+}
+function nextQuestion(){state.currentQ++;showQuestion();}
+
+// ── PODIUM ──
+function endGame(){
+  clearInterval(state.timerInterval);
+  const db=readDB();if(db){db.status='ended';writeDB(db);}
+  const sorted=[...state.players].sort((a,b)=>b.score-a.score);
+  buildPodium(sorted);showScreen('screen-podium');
+  document.getElementById('podium-subtitle').textContent=`${state.currentQ} questions — Bravo à tous !`;
+  launchConfetti();
+}
+function buildPodium(sorted){
+  const top3=sorted.slice(0,3);const pWrap=document.getElementById('podium-wrap');pWrap.innerHTML='';
+  const order=[1,0,2].slice(0,top3.length);
+  order.forEach(ri=>{if(!top3[ri])return;const p=top3[ri];const medals=['🥇','🥈','🥉'];const div=document.createElement('div');div.className=`podium-player rank-${ri+1}`;div.innerHTML=`<div class="podium-avatar" style="background:${p.color}22;color:${p.color}">${initials(p.name)}</div><div class="podium-name">${p.name}</div><div class="podium-score">${p.score} pts</div><div class="podium-block">${medals[ri]}</div>`;pWrap.appendChild(div);});
+  document.getElementById('full-leaderboard').innerHTML=sorted.map((p,i)=>`<div class="lb-row"><div class="lb-rank">${i+1}</div><div class="lb-avatar" style="background:${p.color}22;color:${p.color}">${initials(p.name)}</div><div class="lb-name">${p.name}</div><div style="text-align:right"><div class="lb-score">${p.score} pts</div><div class="lb-correct">${p.correct} bonnes rép.</div></div></div>`).join('');
+}
+function launchConfetti(){const wrap=document.getElementById('confetti');const colors=['#E4003A','#1B2A6B','#00A86B','#f59e0b','#6366f1'];for(let i=0;i<70;i++){const el=document.createElement('div');el.className='confetto';el.style.cssText=`left:${Math.random()*100}%;background:${colors[i%5]};animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*1.5}s;top:-20px;transform:rotate(${Math.random()*360}deg)`;wrap.appendChild(el);setTimeout(()=>el.remove(),5000);}}
+
+// ── MODE ÉLÈVE ──
+function goStudent(){state.mode='student';showScreen('screen-student');document.getElementById('s-join').style.display='flex';document.getElementById('s-waiting').style.display='none';document.getElementById('s-answering').style.display='none';document.getElementById('s-result').style.display='none';}
+function joinSession(){
+  const code=document.getElementById('s-code-input').value.trim().toUpperCase();
+  const name=document.getElementById('s-name-input').value.trim();
+  if(!code||!name){alert('Entre le code et ton prénom !');return;}
+  const db=readDB();if(!db||db.code!==code){alert('Code invalide — vérifie avec ton professeur');return;}
+  const colorIdx=db.players.length;state.studentName=name;state.studentColor=getColor(colorIdx);state.studentScore=0;
+  db.players.push({name,color:state.studentColor,score:0,correct:0});writeDB(db);
+  const av=document.getElementById('s-waiting-avatar');av.textContent=initials(name);av.style.background=state.studentColor+'33';av.style.color=state.studentColor;
+  document.getElementById('s-waiting-name').textContent=name;
+  document.getElementById('s-join').style.display='none';document.getElementById('s-waiting').style.display='flex';
+  setInterval(()=>{
+    const db2=readDB();if(!db2)return;
+    document.getElementById('s-waiting-players').textContent=`${db2.players.length} élève${db2.players.length>1?'s':''} connecté${db2.players.length>1?'s':''}`;
+    if(db2.status==='question'&&db2.question&&db2.question.index!==state.currentQ){state.currentQ=db2.question.index;state.studentAnswered=false;state.studentSelected=null;showStudentQ(db2.question);}
+    if(db2.status==='ended')showStudentFinal();
+  },500);
+}
+function showStudentQ(qData){
+  document.getElementById('s-waiting').style.display='none';document.getElementById('s-result').style.display='none';document.getElementById('s-answering').style.display='flex';
+  document.getElementById('s-q-num').textContent=`Q${qData.index+1}`;
+  document.getElementById('s-q-theme').textContent=qData.theme||'';
+  document.getElementById('s-q-text').textContent=qData.q;
+  const cont=document.getElementById('s-answers');
+  if(qData.type==='vf'){cont.innerHTML=`<div class="s-vf"><button class="s-vf-btn" onclick="sAnswer(0,this)">✅ Vrai</button><button class="s-vf-btn" onclick="sAnswer(1,this)">❌ Faux</button></div>`;}
+  else{const L=['A','B','C','D'];cont.innerHTML=`<div class="s-answers-qcm">${qData.a.map((ans,i)=>`<button class="s-ans-btn" onclick="sAnswer(${i},this)"><span class="s-letter">${L[i]}</span><span>${ans}</span></button>`).join('')}</div>`;}
+  let t=qData.type==='vf'?20:30;const timerEl=document.getElementById('s-timer');
+  clearInterval(state.timerInterval);
+  state.timerInterval=setInterval(()=>{
+    t--;timerEl.textContent=t;
+    timerEl.style.color=t>10?'#fff':t>5?'#f97316':'#E4003A';
+    if(t<=0){clearInterval(state.timerInterval);if(!state.studentAnswered)showSResult(null,qData);}
+    const db2=readDB();if(db2&&db2.status==='reveal'&&!state.studentAnswered){clearInterval(state.timerInterval);showSResult(null,qData);}
+  },1000);
+}
+function sAnswer(idx,btn){
+  if(state.studentAnswered)return;state.studentAnswered=true;state.studentSelected=idx;
+  clearInterval(state.timerInterval);btn.classList.add('selected');
+  showSResult(idx,readDB()?.question);
+}
+function showSResult(chosen,qData){
+  state.studentAnswered=true;
+  setTimeout(()=>{
+    const db2=readDB();const actualCorrect=db2?db2.correct:null;
+    if(actualCorrect===null){setTimeout(()=>showSResult(chosen,qData),500);return;}
+    const isCorrect=chosen!==null&&chosen===actualCorrect;
+    const pts=isCorrect?100:0;state.studentScore+=pts;
+    document.getElementById('s-answering').style.display='none';document.getElementById('s-result').style.display='flex';
+    document.getElementById('s-result-icon').textContent=chosen===null?'⏱':isCorrect?'✅':'❌';
+    document.getElementById('s-result-label').textContent=chosen===null?'Temps écoulé !':isCorrect?'Bonne réponse !':'Dommage…';
+    document.getElementById('s-result-pts').textContent=`+${pts} pts`;
+    document.getElementById('s-result-pts').style.color=isCorrect?'var(--vert)':'var(--rouge)';
+    document.getElementById('s-result-total').textContent=`Total : ${state.studentScore} pts`;
+    setInterval(()=>{const db3=readDB();if(db3&&db3.status==='question'&&db3.question&&db3.question.index!==state.currentQ){state.currentQ=db3.question.index;state.studentAnswered=false;showStudentQ(db3.question);}},500);
+  },900);
+}
+function showStudentQ(qData){showSQ(qData);}
+function showSQ(qData){
+  document.getElementById('s-waiting').style.display='none';document.getElementById('s-result').style.display='none';document.getElementById('s-answering').style.display='flex';
+  document.getElementById('s-q-num').textContent=`Q${qData.index+1}`;
+  document.getElementById('s-q-theme').textContent=qData.theme||'';
+  document.getElementById('s-q-text').textContent=qData.q;
+  const cont=document.getElementById('s-answers');
+  if(qData.type==='vf'){cont.innerHTML=`<div class="s-vf"><button class="s-vf-btn" onclick="sAnswer(0,this)">✅ Vrai</button><button class="s-vf-btn" onclick="sAnswer(1,this)">❌ Faux</button></div>`;}
+  else{const L=['A','B','C','D'];cont.innerHTML=`<div class="s-answers-qcm">${qData.a.map((ans,i)=>`<button class="s-ans-btn" onclick="sAnswer(${i},this)"><span class="s-letter">${L[i]}</span><span>${ans}</span></button>`).join('')}</div>`;}
+  let t=qData.type==='vf'?20:30;const timerEl=document.getElementById('s-timer');
+  clearInterval(state.timerInterval);
+  state.timerInterval=setInterval(()=>{
+    t--;timerEl.textContent=t;timerEl.style.color=t>10?'#fff':t>5?'#f97316':'#E4003A';
+    if(t<=0){clearInterval(state.timerInterval);if(!state.studentAnswered)showSResult(null,qData);}
+    const db2=readDB();if(db2&&db2.status==='reveal'&&!state.studentAnswered){clearInterval(state.timerInterval);showSResult(null,qData);}
+  },1000);
+}
+function showStudentFinal(){showStudentFin();}
+function showSResult2(chosen,qData){showSResult(chosen,qData);}
+function showStudentFin(){
+  document.getElementById('s-waiting').style.display='none';document.getElementById('s-answering').style.display='none';
+  document.getElementById('s-result').style.display='flex';
+  document.getElementById('s-result-icon').textContent='🏁';
+  document.getElementById('s-result-label').textContent='Partie terminée !';
+  document.getElementById('s-result-pts').textContent=`${state.studentScore} pts`;
+  document.getElementById('s-result-pts').style.color='var(--rouge)';
+  document.getElementById('s-result-total').textContent='Merci pour ta participation !';
+}
+
+document.getElementById('screen-student').style.display='none';
+</script>
+</body>
+</html>
