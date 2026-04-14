@@ -542,10 +542,26 @@ const QUESTIONS=[
 ];
 
 // ==================== ÉTAT ====================
-let state={mode:null,sessionCode:null,players:[],currentQ:0,selectedThemes:[],filteredQuestions:[],revealed:false,timerInterval:null,timerLeft:30,studentName:null,studentColor:null,studentScore:0,studentAnswered:false,studentSelected:null,answersReceived:{}};
-const DB_KEY='bq_b2m_2026';
-function writeDB(d){try{localStorage.setItem(DB_KEY,JSON.stringify(d));}catch(e){}}
-function readDB(){try{return JSON.parse(localStorage.getItem(DB_KEY));}catch(e){return null;}}
+let state={mode:null,sessionCode:null,players:[],currentQ:0,selectedThemes:[],filteredQuestions:[],revealed:false,timerInterval:null,timerLeft:30,studentName:null,studentColor:null,studentScore:0,studentAnswered:false,studentSelected:null,answersReceived:{},studentCode:null};
+const API='http://217.160.170.126:3001/session';
+let _dbCache=null;
+let _dbDirty=false;
+// writeDB: envoie en async, ne bloque pas l UI
+function writeDB(d){_dbCache=d;_dbDirty=true;}
+// readDB: retourne le cache local immédiatement
+function readDB(){return _dbCache;}
+// Sync loop: pousse les changements et tire les mises à jour
+async function _pushDB(){
+  if(_dbDirty&&_dbCache&&_dbCache.code){
+    _dbDirty=false;
+    try{await fetch(API+'/'+_dbCache.code,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_dbCache)});}catch(e){}
+  }
+}
+async function _pullDB(code){
+  try{const r=await fetch(API+'/'+code);if(r.ok){const d=await r.json();if(d)_dbCache=d;}}catch(e){}
+}
+// Démarrer la boucle de sync
+setInterval(()=>{_pushDB();},300);
 function getColor(i){return COLORS[i%COLORS.length];}
 function initials(n){return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
 function genCode(){return Math.random().toString(36).substr(2,5).toUpperCase();}
@@ -564,12 +580,12 @@ function goLobby(){
   buildThemeGrid();updatePlayersGrid();
   writeDB({code:state.sessionCode,status:'lobby',players:[],question:null});
   showScreen('screen-lobby');
-  setInterval(syncFromDB,1000);
+  setInterval(async()=>{if(state.sessionCode)await _pullDB(state.sessionCode);syncFromDB();},500);
 }
 function buildThemeGrid(){const themes=[...new Set(QUESTIONS.map(q=>q.theme))];document.getElementById('theme-grid').innerHTML=themes.map(t=>`<div class="theme-tag active" onclick="toggleTheme('${t.replace(/'/g,"\\'")}',this)">${t}</div>`).join('');}
 function toggleTheme(theme,el){if(state.selectedThemes.includes(theme)){state.selectedThemes=state.selectedThemes.filter(t=>t!==theme);el.classList.remove('active');}else{state.selectedThemes.push(theme);el.classList.add('active');}}
 function addDemoPlayers(){});writeDB(db);}}}
-function syncFromDB(){
+async function syncFromDB(){
   if(state.mode==='prof'){const db=readDB();if(!db)return;if(JSON.stringify(db.players)!==JSON.stringify(state.players)){state.players=db.players||[];updatePlayersGrid();}
     if(document.getElementById('screen-question').style.display==='block'){document.getElementById('answered-count').textContent=Object.keys(state.answersReceived).length;document.getElementById('total-players-q').textContent=state.players.length;updateAnswerBars();updateAvgScore();}}
   else if(state.mode==='student'){const db=readDB();if(!db)return;
@@ -665,13 +681,15 @@ function joinSession(){
   const code=document.getElementById('s-code-input').value.trim().toUpperCase();
   const name=document.getElementById('s-name-input').value.trim();
   if(!code||!name){alert('Entre le code et ton prénom !');return;}
-  const db=readDB();if(!db||db.code!==code){alert('Code invalide — vérifie avec ton professeur');return;}
+  await _pullDB(code);const db=readDB();if(!db||db.code!==code){alert('Code invalide — vérifie avec ton professeur');return;}
+  state.studentCode=code;
   const colorIdx=db.players.length;state.studentName=name;state.studentColor=getColor(colorIdx);state.studentScore=0;
   db.players.push({name,color:state.studentColor,score:0,correct:0});writeDB(db);
   const av=document.getElementById('s-waiting-avatar');av.textContent=initials(name);av.style.background=state.studentColor+'33';av.style.color=state.studentColor;
   document.getElementById('s-waiting-name').textContent=name;
   document.getElementById('s-join').style.display='none';document.getElementById('s-waiting').style.display='flex';
-  setInterval(()=>{
+  setInterval(async()=>{
+    if(state.studentCode)await _pullDB(state.studentCode);
     const db2=readDB();if(!db2)return;
     document.getElementById('s-waiting-players').textContent=`${db2.players.length} élève${db2.players.length>1?'s':''} connecté${db2.players.length>1?'s':''}`;
     if(db2.status==='question'&&db2.question&&db2.question.index!==state.currentQ){state.currentQ=db2.question.index;state.studentAnswered=false;state.studentSelected=null;showStudentQ(db2.question);}
