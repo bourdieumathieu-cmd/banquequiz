@@ -564,11 +564,11 @@ function goLobby(){
   buildThemeGrid();updatePlayersGrid();
   writeDB({code:state.sessionCode,status:'lobby',players:[],question:null});
   showScreen('screen-lobby');
-  setTimeout(addDemoPlayers,2000);setInterval(syncFromDB,1000);
+  setInterval(syncFromDB,1000);
 }
 function buildThemeGrid(){const themes=[...new Set(QUESTIONS.map(q=>q.theme))];document.getElementById('theme-grid').innerHTML=themes.map(t=>`<div class="theme-tag active" onclick="toggleTheme('${t.replace(/'/g,"\\'")}',this)">${t}</div>`).join('');}
 function toggleTheme(theme,el){if(state.selectedThemes.includes(theme)){state.selectedThemes=state.selectedThemes.filter(t=>t!==theme);el.classList.remove('active');}else{state.selectedThemes.push(theme);el.classList.add('active');}}
-function addDemoPlayers(){if(state.mode!=='prof')return;const names=['Sophie M.','Lucas D.','Emma R.','Théo B.','Chloé V.','Nathan P.','Inès G.','Hugo L.'];const count=Math.floor(Math.random()*4)+4;for(let i=0;i<Math.min(count,names.length);i++){const db=readDB();if(db&&!db.players.find(p=>p.name===names[i])){db.players.push({name:names[i],color:getColor(i+1),score:0,correct:0});writeDB(db);}}}
+function addDemoPlayers(){});writeDB(db);}}}
 function syncFromDB(){
   if(state.mode==='prof'){const db=readDB();if(!db)return;if(JSON.stringify(db.players)!==JSON.stringify(state.players)){state.players=db.players||[];updatePlayersGrid();}
     if(document.getElementById('screen-question').style.display==='block'){document.getElementById('answered-count').textContent=Object.keys(state.answersReceived).length;document.getElementById('total-players-q').textContent=state.players.length;updateAnswerBars();updateAvgScore();}}
@@ -604,20 +604,10 @@ function showQuestion(){
   if(q.type==='vf'){cont.innerHTML=`<div class="q-vf"><div class="vf-btn" id="vf-v">✅ Vrai</div><div class="vf-btn" id="vf-f">❌ Faux</div></div>`;buildBarsVF();}
   else{const L=['A','B','C','D'];cont.innerHTML=`<div class="answers-grid">${q.a.map((a,i)=>`<div class="answer-card" id="ans-${i}"><div class="letter">${L[i]}</div><div class="answer-text">${a}</div></div>`).join('')}</div>`;buildBarsQCM(q.a.length);}
   startTimer(q.type==='vf'?20:30);
-  simulateAnswers(q);
+  
   const db=readDB();if(db){db.status='question';db.question={index:state.currentQ,q:q.q,a:q.a,type:q.type,theme:q.theme};writeDB(db);}
 }
-function simulateAnswers(q){
-  state.players.forEach(p=>{
-    const delay=2000+Math.random()*16000;
-    setTimeout(()=>{
-      if(state.revealed||state.currentQ!==state.filteredQuestions.indexOf(q))return;
-      const c=q.correct;const r=Math.random();let chosen;
-      if(r<0.65)chosen=c;else{const w=q.a.map((_,j)=>j).filter(j=>j!==c);chosen=w[Math.floor(Math.random()*w.length)];}
-      state.answersReceived[p.name]=chosen;
-    },delay);
-  });
-}
+function simulateAnswers(q){}
 function startTimer(secs){
   clearInterval(state.timerInterval);state.timerLeft=secs;
   const ring=document.getElementById('timer-ring');const numEl=document.getElementById('timer-num');
