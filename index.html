@@ -711,7 +711,7 @@ function showStudentQ(qData){
     t--;timerEl.textContent=t;
     timerEl.style.color=t>10?'#fff':t>5?'#f97316':'#E4003A';
     if(t<=0){clearInterval(state.timerInterval);if(!state.studentAnswered)showSResult(null,qData);}
-    const db2=readDB();if(db2&&db2.status==='reveal'&&!state.studentAnswered){clearInterval(state.timerInterval);showSResult(null,qData);}
+    _pull(state.studentCode||''). then(()=>{const db2=readDB();if(db2&&db2.status==='reveal'&&!state.studentAnswered){clearInterval(state.timerInterval);showSResult(null,qData);}}).catch(()=>{});
   },1000);
 }
 function sAnswer(idx,btn){
@@ -721,7 +721,8 @@ function sAnswer(idx,btn){
 }
 function showSResult(chosen,qData){
   state.studentAnswered=true;
-  setTimeout(()=>{
+  setTimeout(async()=>{
+    if(state.studentCode)await _pull(state.studentCode);
     const db2=readDB();const actualCorrect=db2?db2.correct:null;
     if(actualCorrect===null){setTimeout(()=>showSResult(chosen,qData),500);return;}
     const isCorrect=chosen!==null&&chosen===actualCorrect;
@@ -749,7 +750,7 @@ function showSQ(qData){
   state.timerInterval=setInterval(()=>{
     t--;timerEl.textContent=t;timerEl.style.color=t>10?'#fff':t>5?'#f97316':'#E4003A';
     if(t<=0){clearInterval(state.timerInterval);if(!state.studentAnswered)showSResult(null,qData);}
-    const db2=readDB();if(db2&&db2.status==='reveal'&&!state.studentAnswered){clearInterval(state.timerInterval);showSResult(null,qData);}
+    _pull(state.studentCode||''). then(()=>{const db2=readDB();if(db2&&db2.status==='reveal'&&!state.studentAnswered){clearInterval(state.timerInterval);showSResult(null,qData);}}).catch(()=>{});
   },1000);
 }
 function showStudentFinal(){showStudentFin();}
