@@ -585,7 +585,7 @@ function goLobby(){
 }
 function buildThemeGrid(){const themes=[...new Set(QUESTIONS.map(q=>q.theme))];document.getElementById('theme-grid').innerHTML=themes.map(t=>`<div class="theme-tag active" onclick="toggleTheme('${t.replace(/'/g,"\\'")}',this)">${t}</div>`).join('');}
 function toggleTheme(theme,el){if(state.selectedThemes.includes(theme)){state.selectedThemes=state.selectedThemes.filter(t=>t!==theme);el.classList.remove('active');}else{state.selectedThemes.push(theme);el.classList.add('active');}}
-function addDemoPlayers(){});writeDB(db);}}}
+function addDemoPlayers(){}
 async function syncFromDB(){
   if(state.mode==='prof'){const db=readDB();if(!db)return;if(JSON.stringify(db.players)!==JSON.stringify(state.players)){state.players=db.players||[];updatePlayersGrid();}
     if(document.getElementById('screen-question').style.display==='block'){document.getElementById('answered-count').textContent=Object.keys(state.answersReceived).length;document.getElementById('total-players-q').textContent=state.players.length;updateAnswerBars();updateAvgScore();}}
